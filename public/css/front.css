@@ -1,0 +1,1503 @@
+@import url('https://fonts.googleapis.com/css2?family=Delius&display=swap');
+/* Base Typography & Variable Config */
+:root {
+  --font-base: 'Delius', sans-serif;
+  --navbar-bg: #ffffff;
+  --navbar-text: #1e293b;
+  --hero-overlay: linear-gradient(180deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+  --footer-bg: #0f172a;
+}
+
+[data-bs-theme="dark"] {
+  --navbar-bg: #1e293b;
+  --navbar-text: #f8fafc;
+  --footer-bg: #0b0f19;
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  overflow-x: hidden;
+}
+
+/* Floating White Capsule Navbar */
+.navbar-floating {
+  background: var(--navbar-bg) !important;
+  border-radius: 999px !important;
+  padding: 0.6rem 1.25rem !important;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+  transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .navbar-floating {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.navbar-floating .nav-link {
+  color: var(--navbar-text) !important;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem !important;
+}
+
+.navbar-floating .nav-link:hover,
+.navbar-floating .nav-link.show {
+  color: #0284c7 !important;
+}
+
+.navbar-floating .dropdown-toggle::after {
+  display: none !important;
+}
+
+#navbar-wrapper {
+  z-index: 1050;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+}
+
+#navbar-wrapper.navbar-hidden {
+  transform: translateY(-130%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Toggle Dark Mode Button */
+.btn-theme-toggle {
+  width: 38px;
+  height: 38px;
+  background-color: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+}
+
+/* Floating Weather Widget (Kanan Samping) */
+.weather-widget-floating {
+  position: fixed;
+  right: 0;
+  top: 40%;
+  transform: translateY(-50%);
+  z-index: 1040;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+  padding: 1rem 0.75rem;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  width: 65px;
+}
+
+.weather-widget-floating .weather-desc {
+  font-size: 0.68rem;
+  opacity: 0.8;
+}
+
+/* Back To Top Button */
+.btn-back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1040;
+  background: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  border: 1px solid var(--bs-border-color);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.btn-back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Hero Section & Slider Styling */
+.hero-jds-wrapper {
+  min-height: 85vh;
+  background-color: #0f172a;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-gradient-overlay {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.42) 0%, rgba(15, 23, 42, 0.82) 100%);
+}
+
+.hero-card-slide {
+  height: 200px !important; /* Sebelumnya 320px, diturunkan jadi 200px */
+}
+
+.heroSwiper .swiper-slide {
+  width: 360px !important; /* Menentukan lebar maksimal tiap card */
+  max-width: 85vw;
+}
+
+.hero-card-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  padding: 1rem !important; /* Dikecilkan dari p-4 */
+}
+
+.hero-card-overlay h4 {
+  font-size: 0.95rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.hero-card-overlay p {
+  font-size: 0.75rem !important;
+}
+
+/* Penyesuaian untuk layar HP/Mobile */
+@media (max-width: 575.98px) {
+  .hero-card-slide {
+    height: 160px !important;
+  }
+}
+
+.btn-hero-prev,
+.btn-hero-next {
+  width: 42px;
+  height: 42px;
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-hero-prev:hover,
+.btn-hero-next:hover {
+  background: #0369a1;
+  color: #ffffff;
+}
+
+.hero-indicator-line {
+  width: 2px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Styling Kartu Utama (Light & Dark Mode) */
+.card-jds-hover {
+  background-color: var(--bs-card-bg, #ffffff) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease !important;
+}
+
+/* Hover Effect: Naik sedikit dan bayangan lebih tegas */
+.card-jds-hover:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(2, 132, 199, 0.4) !important; /* Efek highlight garis biru tipis */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* Penyesuaian Khusus Mode Gelap (Dark Mode) */
+[data-bs-theme="dark"] .card-jds-hover {
+  background-color: #1e293b !important; /* Warna kartu gelap yang lebih kontras dari latar belakang */
+  border: 1px solid rgba(255, 255, 255, 0.1) !important; /* Border terang halus agar bentuk kartu jelas */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-bs-theme="dark"] .card-jds-hover:hover {
+  border-color: #38bdf8 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Ikon Aplikasi di Dalam Kartu */
+.app-icon-jds {
+  width: 52px;
+  height: 52px;
+  background-color: rgba(2, 132, 199, 0.12) !important;
+  color: #0284c7 !important;
+  border-radius: 12px;
+}
+
+[data-bs-theme="dark"] .app-icon-jds {
+  background-color: rgba(56, 189, 248, 0.15) !important;
+  color: #38bdf8 !important;
+}
+
+/* Tabs Artikel & Berita */
+.nav-tabs-jds .nav-link {
+  border: none;
+  color: var(--bs-secondary-color);
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+  padding-bottom: 0.75rem;
+}
+
+.nav-tabs-jds .nav-link.active {
+  color: #0284c7 !important;
+  border-bottom-color: #0284c7;
+  background: transparent;
+}
+
+/* Footer Style */
+.footer-jds {
+  background-color: var(--footer-bg);
+}
+
+.social-icon-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-white-logo {
+  filter: brightness(0) invert(1);
+}
+
+/* Utility Helper Classes */
+.fs-7 { font-size: 0.875rem; }
+.fs-8 { font-size: 0.75rem; }
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.max-w-2xl { max-width: 42rem; }
+.max-w-3xl { max-width: 48rem; }
+
+@media (max-width: 991.98px) {
+  .navbar-floating {
+    border-radius: 20px !important;
+  }
+}
+
+/* Styling Kontainer Melengkung di Bagian Atas */
+.bg-section-curved {
+  position: relative;
+  z-index: 10;
+  /* Membuat sudut kiri dan kanan atas melengkung memanjang */
+  border-top-left-radius: 40px !important;
+  border-top-right-radius: 40px !important;
+
+  /* Menarik kontainer sedikit ke atas agar menumpuk halus di atas Hero Section */
+  margin-top: -35px !important;
+
+  /* Memastikan warna latar belakang mengikuti tema (Light/Dark) */
+  background-color: var(--bs-body-bg, #ffffff) !important;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Penyesuaian saat mode gelap aktif */
+[data-bs-theme="dark"] .bg-section-curved {
+  background-color: var(--bs-body-bg, #0f172a) !important;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsif untuk layar HP agar lengkungan tidak terlalu ekstrem */
+@media (max-width: 767.98px) {
+  .bg-section-curved {
+    border-top-left-radius: 24px !important;
+    border-top-right-radius: 24px !important;
+    margin-top: -20px !important;
+  }
+}
+
+/* Secara default (Light Mode): Tampilkan logo gelap, sembunyikan logo putih */
+.brand-logo-light {
+  display: inline-block !important;
+}
+.brand-logo-dark {
+  display: none !important;
+}
+
+/* Ketika Dark Mode Aktif: Sembunyikan logo gelap, tampilkan logo putih */
+[data-bs-theme="dark"] .brand-logo-light {
+  display: none !important;
+}
+[data-bs-theme="dark"] .brand-logo-dark {
+  display: inline-block !important;
+}
+
+
+/* ==========================================================================
+   PAGE DETAIL SHOW - HERO OVERLAY & FLOATING CARD STYLE
+   ========================================================================== */
+
+/* Hero Banner Section (Penyesuaian Jarak Navbar Floating) */
+.page-hero-banner {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background-color: #0f172a;
+  background-image: none;
+  color: #ffffff;
+  padding-top: 170px !important;
+  padding-bottom: 110px;
+  margin-top: 0;
+}
+
+/* Penyesuaian khusus tampilan Mobile/Layar Kecil */
+@media (max-width: 768px) {
+  .page-hero-banner {
+    padding-top: 140px !important;
+    padding-bottom: 90px;
+  }
+}
+
+/* Breadcrumb Styling pada Hero Banner */
+.page-hero-banner .breadcrumb {
+  background: transparent;
+  padding: 0;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.page-hero-banner .breadcrumb-item,
+.page-hero-banner .breadcrumb-item a {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.page-hero-banner .breadcrumb-item.active {
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.page-hero-banner .breadcrumb-item + .breadcrumb-item::before {
+  color: rgba(255, 255, 255, 0.5);
+  content: "›";
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+/* Judul & Deskripsi Banner Hero */
+.page-hero-banner .page-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #ffffff !important;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+
+.page-hero-banner .page-description {
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 850px;
+}
+
+@media (min-width: 992px) {
+  .page-hero-banner .page-title {
+    font-size: 2.75rem;
+  }
+}
+
+/* Floating Content Card (Menumpuk di atas Hero) */
+.page-floating-card {
+  background: var(--card-bg-light, #ffffff) !important;
+  color: var(--text-dark, #0f172a);
+  border-radius: 28px !important;
+  padding: 2.5rem;
+  margin-top: -80px;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* Cover Image di dalam Kartu */
+.page-featured-image {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Styling Konten CKEditor & Detail Informasi (Light Mode Defaults) */
+.page-detail-body {
+  line-height: 1.7;
+  color: #0f172a;
+}
+
+.page-detail-body h1,
+.page-detail-body h2,
+.page-detail-body h3,
+.page-detail-body h4,
+.page-detail-body h5,
+.page-detail-body h6 {
+  color: #0f172a;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.page-detail-body p,
+.page-detail-body ol,
+.page-detail-body ul,
+.page-detail-body li {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   TABLE STYLING (untuk konten dari editor Tiptap)
+   ========================================================================== */
+
+.page-detail-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem 0;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+}
+
+.page-detail-body table th,
+.page-detail-body table td {
+  border: 1px solid #dee2e6;
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.page-detail-body table th {
+  background-color: #1a4a8a;
+  color: #ffffff !important;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.page-detail-body table tr:nth-child(even) td {
+  background-color: #f1f5f9;
+}
+
+.page-detail-body table tr:hover td {
+  background-color: #e8f0fe;
+}
+
+[data-bs-theme="dark"] .page-detail-body table th {
+  background-color: #1e3a6e !important;
+  color: #ffffff !important;
+  border-color: #2d4a80 !important;
+}
+
+[data-bs-theme="dark"] .page-detail-body table td {
+  background-color: #1e293b !important;
+  color: rgba(255,255,255,0.85) !important;
+  border-color: #334155 !important;
+}
+
+[data-bs-theme="dark"] .page-detail-body table tr:nth-child(even) td {
+  background-color: #172033 !important;
+}
+
+/* ==========================================================================
+   ACCORDION / DETAILS-SUMMARY STYLING (Tiptap output)
+   ========================================================================== */
+
+.page-detail-body details {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.page-detail-body details > summary {
+  background: linear-gradient(90deg, #1a4a8a 0%, #2563eb 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.85rem 1.25rem;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  user-select: none;
+  transition: background 0.2s ease;
+}
+
+.page-detail-body details > summary::before {
+  content: '▶';
+  display: inline-block;
+  font-size: 0.75rem;
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.page-detail-body details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.page-detail-body details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.page-detail-body details[open] > summary {
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.page-detail-body details > *:not(summary) {
+  padding: 0.75rem 1rem;
+}
+
+.page-detail-body details > table {
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
+}
+
+.page-detail-body details > table th {
+  background-color: #f0f4f8;
+  color: #0f172a !important;
+}
+
+[data-bs-theme="dark"] .page-detail-body details {
+  border-color: #334155;
+}
+
+[data-bs-theme="dark"] .page-detail-body details > summary {
+  background: linear-gradient(90deg, #1e3a6e 0%, #1d4ed8 100%);
+}
+
+[data-bs-theme="dark"] .page-detail-body details > table th {
+  background-color: #1e293b !important;
+  color: rgba(255,255,255,0.9) !important;
+}
+
+/* Tiptap Task List Styling */
+.page-detail-body ul[data-type="taskList"],
+.ck-content ul[data-type="taskList"] {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0.75rem 0 !important;
+}
+
+.page-detail-body ul[data-type="taskList"] li[data-type="taskItem"],
+.ck-content ul[data-type="taskList"] li[data-type="taskItem"] {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 0.6rem !important;
+  margin-bottom: 0.4rem !important;
+  list-style: none !important;
+}
+
+.page-detail-body ul[data-type="taskList"] li[data-type="taskItem"] > label,
+.ck-content ul[data-type="taskList"] li[data-type="taskItem"] > label {
+  flex-shrink: 0 !important;
+  user-select: none !important;
+  margin-top: 0.2rem !important;
+  cursor: pointer !important;
+}
+
+.page-detail-body ul[data-type="taskList"] li[data-type="taskItem"] > label input[type="checkbox"],
+.ck-content ul[data-type="taskList"] li[data-type="taskItem"] > label input[type="checkbox"] {
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+  cursor: pointer !important;
+  accent-color: #0284c7 !important;
+  border-radius: 4px !important;
+}
+
+.page-detail-body ul[data-type="taskList"] li[data-type="taskItem"] > div,
+.ck-content ul[data-type="taskList"] li[data-type="taskItem"] > div {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+}
+
+.page-detail-body ul[data-type="taskList"] li[data-type="taskItem"] > div > p,
+.ck-content ul[data-type="taskList"] li[data-type="taskItem"] > div > p {
+  margin: 0 !important;
+}
+
+.page-detail-body ul[data-type="taskList"] li[data-type="taskItem"][data-checked="true"] > div > p,
+.ck-content ul[data-type="taskList"] li[data-type="taskItem"][data-checked="true"] > div > p {
+  text-decoration: line-through !important;
+  opacity: 0.6 !important;
+}
+
+/* Tiptap PDF Embed Card Component */
+.tiptap-pdf-embed {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1rem !important;
+  padding: 0.9rem 1.25rem !important;
+  border-radius: 16px !important;
+  background-color: var(--bs-card-bg, #ffffff) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  text-decoration: none !important;
+  color: var(--bs-body-color, #1e293b) !important;
+  margin: 1.25rem 0 !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+[data-bs-theme="dark"] .tiptap-pdf-embed {
+  background-color: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3) !important;
+}
+
+.tiptap-pdf-embed:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(220, 53, 69, 0.15) !important;
+  border-color: rgba(220, 53, 69, 0.4) !important;
+}
+
+.tiptap-pdf-info {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.tiptap-pdf-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(220, 53, 69, 0.12);
+  color: #dc3545;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.tiptap-pdf-action {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #dc3545;
+  background: rgba(220, 53, 69, 0.1);
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   DARK MODE OVERRIDES (TEKS PUTIH & LATAR GELAP)
+   ========================================================================== */
+
+[data-bs-theme="dark"] .page-floating-card {
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .page-detail-body,
+[data-bs-theme="dark"] .page-detail-body h1,
+[data-bs-theme="dark"] .page-detail-body h2,
+[data-bs-theme="dark"] .page-detail-body h3,
+[data-bs-theme="dark"] .page-detail-body h4,
+[data-bs-theme="dark"] .page-detail-body h5,
+[data-bs-theme="dark"] .page-detail-body h6 {
+  color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .page-detail-body p,
+[data-bs-theme="dark"] .page-detail-body ol,
+[data-bs-theme="dark"] .page-detail-body ul,
+[data-bs-theme="dark"] .page-detail-body li,
+[data-bs-theme="dark"] .page-detail-body span {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* ==========================================================================
+   CIRCULAR APPLICATION ICON STYLE (WHITE TEXT ON DARK MODE)
+   ========================================================================== */
+
+/* Item Wrapper */
+.app-circle-item {
+  padding: 0.75rem 0.5rem;
+  border-radius: 20px;
+  transition: transform 0.25s ease;
+}
+
+.app-horizontal-scroll {
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.app-horizontal-item {
+  width: 140px;
+}
+
+.app-horizontal-item .app-circle-item {
+  width: 100%;
+}
+
+.app-circle-item:hover {
+  transform: translateY(-6px);
+}
+
+/* Lingkaran Icon */
+.app-circle-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--card-sub-bg, rgba(241, 245, 249, 0.8));
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  transition: all 0.3s ease;
+}
+
+[data-bs-theme="dark"] .app-circle-icon {
+  background: rgba(30, 41, 59, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hover Effect pada Lingkaran Icon */
+.app-circle-item:hover .app-circle-icon {
+  background: #ffffff;
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12) !important;
+  border-color: var(--bs-primary, #2563eb);
+}
+
+[data-bs-theme="dark"] .app-circle-item:hover .app-circle-icon {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Teks Judul Aplikasi di Bawah Lingkaran */
+.app-circle-title {
+  color: var(--text-dark, #0f172a);
+  line-height: 1.3;
+}
+
+/* Memaksa warna teks putih biasa saat Dark Mode (Baik biasa maupun saat hover) */
+[data-bs-theme="dark"] .app-circle-title,
+[data-bs-theme="dark"] .app-circle-item:hover .app-circle-title {
+  color: #FFFFFF !important;
+}
+
+/* Responsif untuk Layar Kecil (Mobile) */
+@media (max-width: 576px) {
+  .app-circle-icon {
+    width: 68px;
+    height: 68px;
+  }
+  .app-circle-icon i {
+    font-size: 1.35rem !important;
+  }
+}
+
+/* ==========================================================================
+   HORIZONTAL NEWS SLIDER STYLING
+   ========================================================================== */
+
+.news-horizontal-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Sembunyikan scrollbar bawaan agar tampilan lebih bersih */
+.news-horizontal-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.news-horizontal-scroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 10px;
+}
+
+.news-horizontal-scroll::-webkit-scrollbar-thumb {
+  background: rgba(37, 99, 235, 0.25);
+  border-radius: 10px;
+}
+
+.news-horizontal-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.5);
+}
+
+/* ==========================================================================
+   GLASSMORPHISM AGENDA WIDGET HOVER EFFECT
+   ========================================================================== */
+
+.agenda-card-hover {
+  border: 1px solid rgba(226, 232, 240, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+[data-bs-theme="dark"] .agenda-card-hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.agenda-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  border-color: var(--bs-primary, #2563eb);
+}
+
+.group:hover .group-hover-primary {
+  color: var(--bs-primary, #2563eb) !important;
+}
+
+/* ==========================================================================
+   HERO BACKGROUND SLIDER (SMOOTH CROSS-FADE)
+   ========================================================================== */
+
+.hero-bg-backdrop,
+.hero-bg-slider {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+/* Mengatur tumpukan gambar latar belakang */
+.hero-bg-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Gambar yang aktif akan muncul */
+.hero-bg-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Cegah gambar terdistorsi / pecah saat di-stretch ke full screen */
+.hero-bg-slide img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Overlay gradient dipastikan selalu di paling atas gambar */
+.hero-gradient-overlay {
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   CUSTOM BOOTSTRAP PAGINATION STYLING
+   ========================================================================== */
+
+.pagination {
+  gap: 6px;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination .page-item .page-link {
+  border-radius: 999px !important;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--bs-body-color, #1e293b);
+  background-color: var(--bs-card-bg, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
+}
+
+/* Hover State */
+.pagination .page-item .page-link:hover {
+  background-color: var(--bs-primary, #2563eb);
+  color: #ffffff !important;
+  border-color: var(--bs-primary, #2563eb);
+  transform: translateY(-2px);
+}
+
+/* Active Page State */
+.pagination .page-item.active .page-link {
+  background-color: var(--bs-primary, #2563eb) !important;
+  border-color: var(--bs-primary, #2563eb) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+/* Disabled State */
+.pagination .page-item.disabled .page-link {
+  opacity: 0.5;
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Penyesuaian khusus Dark Mode */
+[data-bs-theme="dark"] .pagination .page-item .page-link {
+  background-color: #1e293b;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-bs-theme="dark"] .pagination .page-item.active .page-link {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+/* Sembunyikan SVG raksasa jika ada elemen SVG tersisa dari Tailwind */
+.pagination svg {
+  width: 1rem !important;
+  height: 1rem !important;
+}
+
+/* Sembunyikan teks keterangan 'Showing 1 to X of Y results' pada pagination */
+.pagination-wrapper .small,
+.pagination-wrapper p.text-sm,
+nav[role="navigation"] .text-sm,
+nav[role="navigation"] p,
+.pagination + div p,
+div:has(> .pagination) p {
+  display: none !important;
+}
+
+/* ==========================================================================
+   COMPACT & CAPSULE LAYANAN PUBLIK CARDS (HEMAT RUANG)
+   ========================================================================== */
+
+.layanan-compact-card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 18px;
+  background-color: var(--bs-card-bg, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.layanan-compact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(2, 132, 199, 0.12);
+  border-color: rgba(2, 132, 199, 0.35);
+}
+
+[data-bs-theme="dark"] .layanan-compact-card {
+  background-color: #1e293b;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] .layanan-compact-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.5);
+}
+
+.layanan-compact-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(2, 132, 199, 0.15) 0%, rgba(2, 132, 199, 0.05) 100%);
+  color: #0284c7;
+  transition: transform 0.25s ease;
+}
+
+[data-bs-theme="dark"] .layanan-compact-icon {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0.05) 100%);
+  color: #38bdf8;
+}
+
+.layanan-compact-card:hover .layanan-compact-icon {
+  transform: scale(1.08);
+}
+
+.layanan-compact-arrow {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  background-color: rgba(0, 0, 0, 0.04);
+  color: var(--bs-secondary-color);
+  transition: all 0.25s ease;
+  flex-shrink: 0;
+}
+
+[data-bs-theme="dark"] .layanan-compact-arrow {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.layanan-compact-card:hover .layanan-compact-arrow {
+  background-color: #0284c7;
+  color: #ffffff;
+  transform: translateX(3px);
+}
+
+[data-bs-theme="dark"] .layanan-compact-card:hover .layanan-compact-arrow {
+  background-color: #0284c7;
+  color: #ffffff;
+}
+
+.layanan-pill-card {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 1rem 0.5rem 0.6rem;
+  border-radius: 999px;
+  background-color: var(--bs-card-bg, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 50px;
+}
+
+.layanan-pill-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(2, 132, 199, 0.15);
+  border-color: rgba(2, 132, 199, 0.4);
+}
+
+[data-bs-theme="dark"] .layanan-pill-card {
+  background-color: #1e293b;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-bs-theme="dark"] .layanan-pill-card:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.layanan-pill-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  box-shadow: 0 3px 8px rgba(2, 132, 199, 0.3);
+}
+
+.layanan-pill-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--bs-body-color, #0f172a);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+
+[data-bs-theme="dark"] .layanan-pill-title {
+  color: #f8fafc;
+}
+
+.layanan-pill-arrow {
+  font-size: 0.8rem;
+  color: var(--bs-secondary-color);
+  transition: transform 0.25s ease, color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.layanan-pill-card:hover .layanan-pill-arrow {
+  transform: translateX(3px);
+  color: #0284c7;
+}
+
+[data-bs-theme="dark"] .layanan-pill-card:hover .layanan-pill-arrow {
+  color: #38bdf8;
+}
+
+/* ==========================================================================
+   SARANA & PRASARANA CUSTOM DISTINCT DESIGN (.sp-card-custom)
+   ========================================================================== */
+
+.sp-card-custom {
+  background-color: var(--bs-card-bg, #ffffff);
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sp-card-custom:hover {
+  transform: translateY(-8px);
+  border-color: rgba(14, 165, 233, 0.4);
+  box-shadow: 0 18px 38px rgba(14, 165, 233, 0.15);
+}
+
+[data-bs-theme="dark"] .sp-card-custom {
+  background-color: #1e293b;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
+[data-bs-theme="dark"] .sp-card-custom:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.6);
+}
+
+.sp-thumb-wrapper {
+  position: relative;
+  height: 190px;
+  overflow: hidden;
+}
+
+.sp-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  image-rendering: auto;
+  transition: transform 0.4s ease;
+}
+
+.sp-card-custom:hover .sp-thumb-img {
+  transform: scale(1.08);
+}
+
+.sp-overlay-gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+  z-index: 1;
+}
+
+.sp-badge-category {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 2;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sp-badge-status {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 2;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sp-badge-status.baik {
+  background: rgba(16, 185, 129, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sp-badge-status.rusak-ringan {
+  background: rgba(245, 158, 11, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sp-badge-status.rusak-berat {
+  background: rgba(239, 68, 68, 0.85);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sp-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.sp-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--bs-body-color, #0f172a);
+  margin-bottom: 0.5rem;
+}
+
+.sp-info-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--bs-secondary-color);
+}
+
+.sp-action-btn {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0284c7;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: gap 0.25s ease;
+}
+
+.sp-card-custom:hover .sp-action-btn {
+  gap: 0.6rem;
+  color: #0369a1;
+}
+
+[data-bs-theme="dark"] .sp-action-btn {
+  color: #38bdf8;
+}
+
+
+
+/* ==========================================================================
+   BUG FIX: LAYOUT & OVERFLOW CORRECTIONS
+   Diperbaiki untuk mengatasi: kartu terpotong, sidebar overlap, iframe meluap
+   ========================================================================== */
+
+/* --- FIX 1: iframe & video responsive di dalam konten CKEditor/Tiptap --- */
+.page-detail-body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Semua iframe (termasuk YouTube embed) dibuat responsive */
+.page-detail-body iframe,
+.page-floating-card iframe,
+.ck-content iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  aspect-ratio: 16 / 9;
+  height: auto !important;
+  border: none;
+  border-radius: 12px;
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Wrapper untuk embed video agar tidak meluap */
+.page-detail-body .video-wrapper,
+.page-detail-body figure.media {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  margin: 1rem 0;
+}
+
+/* Gambar di konten CKEditor juga dibatasi */
+.page-detail-body img,
+.ck-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+/* --- FIX 2: page-floating-card — tambahkan overflow:hidden agar konten tidak meluap --- */
+.page-floating-card {
+  overflow: hidden;
+}
+
+/* --- FIX 3: Sidebar Berita — sejajar dengan kartu, tidak overlap --- */
+.sidebar-berita-col {
+  margin-top: 0;
+  position: relative;
+  z-index: 10;
+}
+
+/* Reset sidebar di mobile & tablet agar tidak overlap */
+@media (max-width: 991.98px) {
+  .sidebar-berita-col {
+    margin-top: 0 !important;
+    position: static !important;
+    z-index: auto !important;
+  }
+}
+
+/* --- FIX 4: Container floating section — cegah horizontal overflow kartu --- */
+.container-overlap {
+  position: relative;
+  z-index: 10;
+  overflow-x: clip; /* clip lebih aman dari hidden, tidak potong sticky */
+}
+
+/* Pastikan Bootstrap row tidak menyebabkan horizontal scroll */
+.container-overlap > .row {
+  --bs-gutter-x: 1.5rem;
+}
+
+/* --- FIX 5: Utility — teks warna utama (dark mode aware) --- */
+.text-main {
+  color: var(--bs-body-color) !important;
+}
+
+.text-muted-custom {
+  color: var(--bs-secondary-color) !important;
+}
+
+/* --- FIX 6: Glass card (sidebar, agenda widget, dll) — pastikan tidak transparan total --- */
+.glass-card {
+  background: var(--bs-body-bg) !important;
+  border: 1px solid var(--bs-border-color) !important;
+}
+
+[data-bs-theme="dark"] .glass-card {
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* --- FIX 7: btn-glass-pill style yang hilang --- */
+.btn-glass-pill {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--bs-body-color);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  transition: all 0.25s ease;
+}
+
+.btn-glass-pill:hover {
+  background: rgba(2, 132, 199, 0.15);
+  border-color: rgba(2, 132, 199, 0.4);
+  color: #0284c7;
+}
+
+[data-bs-theme="dark"] .btn-glass-pill {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+}
+
+[data-bs-theme="dark"] .btn-glass-pill:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* --- FIX 8: Section background — pastikan section tidak tembus ke background hero --- */
+section.py-5 {
+  background-color: var(--bs-body-bg);
+  position: relative;
+  z-index: 5;
+}
+
+/* --- FIX 9: Hover background subtle di list berita terpopuler --- */
+.hover-bg-subtle:hover {
+  background-color: var(--bs-tertiary-bg) !important;
+}
+
+/* --- FIX 10: SIMSALABIM iframe scaler — dikelola di komdigi-widget.css --- */
+/* Override dihapus, gunakan komdigi-widget.css untuk styling simsalabim */
+
+/* --- FIX 11: Sarana Prasarana section di homepage — cegah gambar terpotong --- */
+.sp-thumb-wrapper {
+  overflow: hidden;
+  border-radius: 0;
+}
+
+/* Pastikan kolom Sarana Prasarana tidak overflow ke kanan */
+section .row.g-4 {
+  overflow: visible;
+}
+
+/* --- FIX 12: Responsive fixes untuk mobile --- */
+@media (max-width: 767.98px) {
+  .page-floating-card {
+    padding: 1.5rem !important;
+    margin-top: -40px !important;
+    border-radius: 20px !important;
+  }
+
+  .page-hero-banner .page-title {
+    font-size: 1.75rem !important;
+  }
+
+  .page-hero-banner .page-description {
+    font-size: 0.875rem !important;
+  }
+
+  /* Container overlap di mobile tidak perlu negative margin terlalu besar */
+  .container-overlap {
+    margin-top: -30px !important;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .page-floating-card {
+    padding: 1.25rem !important;
+    margin-top: -20px !important;
+  }
+}
+
+/* --- FIX 13: Pastikan dark mode floating card benar --- */
+[data-bs-theme="dark"] .page-floating-card {
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* --- FIX 14: min-w-0 utility untuk flex truncation --- */
+.min-w-0 {
+  min-width: 0 !important;
+}
+
+/* --- FIX 15: Transition helper --- */
+.transition-all {
+  transition: all 0.25s ease !important;
+}
+
+/* --- FIX 16: leading-relaxed dan leading-snug --- */
+.leading-relaxed { line-height: 1.65 !important; }
+.leading-snug    { line-height: 1.35 !important; }
+
+/* --- FIX 17: Accessibility widget z-index tidak bentrok --- */
+#accessibility-widget-container {
+  z-index: 1035 !important;
+}

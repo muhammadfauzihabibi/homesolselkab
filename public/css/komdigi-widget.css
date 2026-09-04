@@ -1,0 +1,236 @@
+/* ==========================================================================
+   EXACT KOMDIGI NEWS AGGREGATOR WIDGET STYLING (MATCHING REFERENCE SCREENSHOT)
+   ========================================================================== */
+
+.komdigi-exact-wrapper {
+    background-color: #172059;
+    border-radius: 6px;
+    padding: 14px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Inner White Container Card */
+.komdigi-exact-card {
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 10px 8px 10px 14px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 
+   ==========================================================================
+   PENTING: TAMPILKAN 4-5 BERITA TERLIHAT & SISANYA DI-SCROLL
+   ==========================================================================
+*/
+.komdigi-exact-body {
+    max-height: 550px;
+    overflow-y: auto;
+    padding-right: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    flex-grow: 1;
+}
+
+/* Exact Custom Scrollbar */
+.komdigi-exact-body::-webkit-scrollbar {
+    width: 7px;
+}
+
+.komdigi-exact-body::-webkit-scrollbar-track {
+    background: #f1f3f5;
+    border-radius: 4px;
+}
+
+.komdigi-exact-body::-webkit-scrollbar-thumb {
+    background-color: #8c9ba5;
+    border-radius: 4px;
+}
+
+.komdigi-exact-body::-webkit-scrollbar-thumb:hover {
+    background-color: #6c7a86;
+}
+
+/* Scroll Arrow Buttons (Up & Down) */
+.komdigi-scroll-btn {
+    position: absolute;
+    right: 6px;
+    background: transparent;
+    border: none;
+    color: #6c7a86;
+    cursor: pointer;
+    padding: 2px 4px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
+}
+
+.komdigi-scroll-btn:hover {
+    color: #172059;
+}
+
+.btn-scroll-up {
+    top: 2px;
+}
+
+.btn-scroll-down {
+    bottom: 2px;
+}
+
+/* Item Wrapper */
+.komdigi-exact-item {
+    padding: 12px 0;
+}
+
+.komdigi-exact-item.has-dotted-divider {
+    border-bottom: 1px dotted #8c9ba5;
+}
+
+/* Left Circle Badge */
+.komdigi-exact-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #2c1a6e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(44, 26, 110, 0.3);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.komdigi-exact-circle:hover {
+    transform: scale(1.05);
+}
+
+/* Category & Timestamp */
+.komdigi-exact-category {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    letter-spacing: -0.01em;
+}
+
+.komdigi-exact-date {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #556285;
+}
+
+/* News Title Text */
+.komdigi-exact-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.38;
+    color: #1a1a1a;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 2px;
+    transition: color 0.15s ease;
+}
+
+.komdigi-exact-title:hover {
+    color: #1e3a8a;
+    text-decoration: underline !important;
+}
+
+/* Dark Mode Support (Bootstrap 5) */
+[data-bs-theme="dark"] .komdigi-exact-card {
+    background-color: #ffffff;
+}
+
+[data-bs-theme="dark"] .komdigi-exact-title {
+    color: #1a1a1a;
+}
+
+/* Hover Effect & Scaled Desktop Preview SIMSALABIM Widget */
+.card-simsalabim-hover {
+    transition: none;
+}
+
+.card-simsalabim-hover:hover {
+    box-shadow: none !important;
+    transform: none !important;
+}
+
+/*
+ * SIMSALABIM iframe scaler — full-fill card
+ * Strategi: wrapper absolute fill penuh card,
+ * iframe ukuran asli desktop (1280×800), di-scale
+ * agar memenuhi seluruh area card secara proporsional.
+ *
+ * Scale = card_width / iframe_width
+ * Kartu col-lg-4 ≈ 360px lebar, 320px tinggi
+ * Iframe asli: 1280×800
+ * Scale x = 360/1280 ≈ 0.281 → kita pakai sedikit lebih besar agar tinggi juga terisi
+ * Kita target scale = card_height / (iframe_height * scale) pas:
+ * Pakai scale = 320/800 = 0.40 (berdasarkan tinggi)
+ * Lebar yang terisi = 1280 * 0.40 = 512px > 360px → lebih dari cukup, geser ke tengah
+ */
+.simsalabim-card-wrapper {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.simsalabim-iframe-scaler {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform-origin: top left;
+    /*
+     * scale(0.28): 1280 * 0.28 = 358px ≈ lebar card col-lg-4 (~360px)
+     * Karena overflow:hidden pada wrapper, sisi kanan yang lebih akan terpotong rapi
+     */
+    width: 1280px;
+    height: 900px;
+    transform: scale(0.28);
+    pointer-events: none;
+}
+
+.simsalabim-iframe-scaler iframe {
+    width: 1280px !important;
+    height: 900px !important;
+    border: none !important;
+    pointer-events: none;
+    display: block;
+    /* Override rule dari front.css yang konfliks */
+    aspect-ratio: unset !important;
+    border-radius: 0 !important;
+}
+
+/* Responsive: sesuaikan scale untuk layar lebih kecil */
+@media (max-width: 1199.98px) {
+    /* col-lg-4 pada 992–1200px ≈ 300px lebar */
+    .simsalabim-iframe-scaler {
+        transform: scale(0.235);
+    }
+}
+
+@media (max-width: 991.98px) {
+    /* Di bawah lg, card bisa jadi full width — scale lebih besar */
+    .simsalabim-iframe-scaler {
+        transform: scale(0.4);
+    }
+}
