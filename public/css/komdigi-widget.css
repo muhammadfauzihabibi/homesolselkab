@@ -4,8 +4,8 @@
 
 .komdigi-exact-wrapper {
     background-color: #172059;
-    border-radius: 6px;
-    padding: 14px;
+    border-radius: 1rem;
+    padding: 12px;
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
@@ -13,33 +13,37 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
+    flex: 1 1 0;
+    min-height: 0;
     height: 100%;
 }
 
 /* Inner White Container Card */
 .komdigi-exact-card {
     background-color: #ffffff;
-    border-radius: 4px;
-    padding: 10px 8px 10px 14px;
+    border-radius: 12px;
+    padding: 8px 8px 8px 12px;
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    flex-grow: 1;
+    flex: 1 1 0;
+    min-height: 0;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
-/* 
+/*
    ==========================================================================
-   PENTING: TAMPILKAN 4-5 BERITA TERLIHAT & SISANYA DI-SCROLL
+   PENTING: TAMPILKAN BERITA SECARA PENUH & BISA DI-SCROLL
    ==========================================================================
 */
 .komdigi-exact-body {
-    max-height: 550px;
+    flex: 1 1 0;
+    min-height: 0;
     overflow-y: auto;
     padding-right: 12px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    flex-grow: 1;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
 /* Exact Custom Scrollbar */

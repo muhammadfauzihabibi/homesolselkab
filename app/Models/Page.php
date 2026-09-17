@@ -24,7 +24,6 @@ class Page extends Model
         'judul',
         'slug',
         'deskripsi',
-        'thumbnail',
         'konten',
         'aktif'
     ];

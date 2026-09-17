@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;
-use Spatie\Activitylog\Models\Activity;
 
 class LogAuthentication
 {

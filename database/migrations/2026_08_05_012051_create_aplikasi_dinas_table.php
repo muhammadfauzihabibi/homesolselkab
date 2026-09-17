@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('nama');
             $table->string('url');
-            $table->unsignedInteger('urutan')->default(0);
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

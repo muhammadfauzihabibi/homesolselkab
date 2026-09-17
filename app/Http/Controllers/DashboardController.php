@@ -8,9 +8,11 @@ use App\Models\Opd;
 use App\Models\Kecamatan;
 use App\Models\AplikasiDinas;
 use App\Models\Pengumuman;
-use Illuminate\Http\Request;
+use App\Models\LayananPublik;
+use App\Models\Dokumentasi;
+use App\Models\Page;
+use App\Models\Menu;
 use App\Models\Visitor;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -19,15 +21,15 @@ class DashboardController extends Controller
     {
         $counts = [
             'berita' => Berita::count(),
-            'layanan_publik' => \App\Models\LayananPublik::count(),
+            'layanan_publik' => LayananPublik::count(),
             'opd' => Opd::count(),
             'kecamatan' => Kecamatan::count(),
             'aplikasi_dinas' => AplikasiDinas::count(),
             'pengumuman' => Pengumuman::count(),
             'agenda' => Agenda::count(),
-            'dokumentasi' => \App\Models\Dokumentasi::count(),
-            'page' => \App\Models\Page::count(),
-            'menu' => \App\Models\Menu::count(),
+            'dokumentasi' => Dokumentasi::count(),
+            'page' => Page::count(),
+            'menu' => Menu::count(),
         ];
 
         $today = now()->toDateString();

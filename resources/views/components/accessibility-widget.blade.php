@@ -20,7 +20,7 @@
 
     <!-- Panel Body / Controls -->
     <div class="access-panel-body p-3">
-      
+
       <!-- 1. Text Zoom Controls -->
       <div class="access-control-group mb-3 pb-3 border-bottom">
         <div class="d-flex align-items-center justify-content-between mb-2">
@@ -44,17 +44,19 @@
           <i class="bi bi-fonts me-1 text-primary"></i> Jenis Font
         </label>
         <select id="access-font-select" class="form-select form-select-sm fs-7 rounded-3 access-font-dropdown">
-          <option value="default">Default (Plus Jakarta Sans)</option>
+          <option value="default">Default (Noto Sans Sora Sompeng)</option>
           <option value="readable">Readable / Dyslexic Friendly</option>
           <option value="serif">Serif (Formal / Merriweather)</option>
           <option value="monospace">Monospace (Ketik / Code)</option>
+          <option value="courier-prime">Courier Prime</option>
+          <option value="comic-neue">Comic Neue</option>
           <option value="sans-serif">Sans-Serif Standard (Arial)</option>
         </select>
       </div>
 
       <!-- 3. Visual Toggles -->
       <div class="access-control-group mb-3 pb-3 border-bottom d-flex flex-column gap-2">
-        
+
         <!-- Grayscale -->
         <button type="button" id="btn-toggle-grayscale" class="access-toggle-btn w-100 py-2 px-3 d-flex align-items-center justify-content-between">
           <span class="d-flex align-items-center gap-2">
@@ -409,6 +411,32 @@
     font-family: 'Consolas', 'Courier New', monospace !important;
   }
 
+  html.access-font-courier-prime body,
+  html.access-font-courier-prime p,
+  html.access-font-courier-prime span,
+  html.access-font-courier-prime a,
+  html.access-font-courier-prime h1,
+  html.access-font-courier-prime h2,
+  html.access-font-courier-prime h3,
+  html.access-font-courier-prime h4,
+  html.access-font-courier-prime h5,
+  html.access-font-courier-prime h6 {
+    font-family: 'Courier Prime', 'Courier New', monospace !important;
+  }
+
+  html.access-font-comic-neue body,
+  html.access-font-comic-neue p,
+  html.access-font-comic-neue span,
+  html.access-font-comic-neue a,
+  html.access-font-comic-neue h1,
+  html.access-font-comic-neue h2,
+  html.access-font-comic-neue h3,
+  html.access-font-comic-neue h4,
+  html.access-font-comic-neue h5,
+  html.access-font-comic-neue h6 {
+    font-family: 'Comic Neue', 'Comic Sans MS', cursive !important;
+  }
+
   html.access-font-sans-serif body,
   html.access-font-sans-serif p,
   html.access-font-sans-serif span,
@@ -472,7 +500,8 @@
     // --- 4. TEXT ZOOM CONTROLLER WITH MIN/MAX LIMITS ---
     const applyZoom = (zoom) => {
       currentZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom));
-      document.documentElement.style.fontSize = `${currentZoom}%`;
+      const effectiveFontSize = (currentZoom * 0.9).toFixed(1);
+      document.documentElement.style.fontSize = `${effectiveFontSize}%`;
       zoomIndicator.textContent = `${currentZoom}%`;
       localStorage.setItem('access_zoom', currentZoom);
 

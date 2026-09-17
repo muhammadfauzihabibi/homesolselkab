@@ -1,51 +1,75 @@
-<nav class="navbar navbar-expand-lg sticky-top  mb-4">
-  <div class="container-fluid px-2">
-    <!-- Sidebar Toggle for Mobile -->
-    <button class="btn btn-glass-icon d-md-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="bi bi-list fs-5"></i>
-    </button>
-    
-    <!-- Title / Brand Logo Left -->
-    <a class="navbar-brand d-flex align-items-center gap-3 me-auto" href="{{ route('dashboard') }}">
-      <div class="rounded-circle d-flex align-items-center justify-content-center p-1" style="width: 38px; height: 38px; background: #e9f8d9;">
-        <img src="{{ asset('images/lambangsolsel.png') }}" alt="Logo Pemda Solsel" width="24" height="24" onerror="this.src='{{ asset('images/logo.png') }}'">
-      </div>
-      <div>
-        <span class="fw-bold fs-6 d-block leading-none" style="letter-spacing: -0.3px;">Dashboard Overview</span>
-        <small class="text-muted-custom d-block fs-8">Portal Pengolah Data Pemkab Solok Selatan</small>
-      </div>
-    </a>
-    
-    <!-- Mobile Toggler -->
-    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    
-    <div class="collapse navbar-collapse justify-content-end mt-2 mt-lg-0" id="navbarNav">
+<nav class="navbar navbar-glass p-2 p-lg-3 mb-3">
+  <div class="container-fluid px-2 d-flex align-items-center justify-content-between gap-2">
 
-      <ul class="navbar-nav align-items-center gap-2">
+    <!-- Left Section: Mobile Toggle & Brand Logo -->
+    <div class="d-flex align-items-center gap-2 gap-lg-3">
+      <!-- Sidebar Toggle for Mobile -->
+      <button class="btn btn-glass-icon d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar" aria-controls="mobileSidebar" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-5"></i>
+      </button>
 
-        <!-- User Profile Dropdown -->
-        <li class="nav-item dropdown ms-lg-1">
-          <a class="nav-link d-flex align-items-center gap-2 p-1 pe-3 rounded-pill bg-light" href="#" role="button" aria-expanded="false">
-            <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-7 shadow-sm" style="width: 34px; height: 34px;">
-              {{ strtoupper(substr(Auth::user()->name ?? 'Admin', 0, 2)) }}
-            </div>
-            <span class="fw-semibold fs-7 text-truncate text-dark d-none d-sm-inline" style="max-width: 110px;">{{ Auth::user()->name ?? 'Administrator' }}</span>
-          </a>
-        </li>
-      </ul>
-
-      <!-- Single Click Theme Switcher Toggle -->
-      <div class="d-flex align-items-center p-3">
-        <button class="btn btn-glass-icon d-flex align-items-center justify-content-center p-2 rounded-circle" 
-                id="theme-toggle-btn" 
-                type="button" 
-                title="Ubah Tema (Terang/Gelap)"
-                style="width: 40px; height: 40px;">
-          <i class="bi bi-moon-stars-fill fs-5" id="theme-toggle-icon"></i>
-        </button>
-      </div>
+      <!-- Brand Logo Left -->
+      <a class="navbar-brand d-flex align-items-center gap-2 gap-lg-3 m-0" href="{{ route('dashboard') }}">
+        <div class="rounded-circle d-flex align-items-center justify-content-center p-1" style="width: 42px; height: 42px; background: rgba(76, 135, 186, 0.15);">
+          <img src="{{ asset('images/lambangsolsel.png') }}" alt="Logo Pemda Solsel" width="26" height="26" onerror="this.src='{{ asset('images/logo.png') }}'">
+        </div>
+        <div class="d-none d-sm-block">
+          <span class="fw-bold fs-9 d-block leading-none" style="letter-spacing: -0.3px; color: var(--text-dark);">Admin Panel</span>
+          <small class="text-muted d-block fs-10">Portal Admin Pemda Solok Selatan</small>
+        </div>
+      </a>
     </div>
+
+    <!-- Right Section: Action Buttons, Theme Switcher & Profile -->
+    <div class="d-flex align-items-center gap-2">
+
+      <!-- Theme Switcher Button -->
+      <button class="btn btn-glass-icon d-flex align-items-center justify-content-center"
+              id="theme-toggle-btn"
+              type="button"
+              title="Ubah Tema (Terang/Gelap)"
+              style="width: 42px; height: 42px; min-width: 42px; min-height: 42px; padding: 0; border-radius: 50%; border: 1px solid rgba(76, 135, 186, 0.12); background: var(--card-sub-bg); color: var(--text-dark);">
+        <i class="bi bi-moon-stars-fill" id="theme-toggle-icon"></i>
+      </button>
+
+      <!-- User Profile Chip -->
+      <div class="dropdown">
+        <button class="btn btn-glass-pill d-flex align-items-center gap-2 py-1 ps-1 pe-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <div class="rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+               style="width: 34px; height: 34px; background: var(--solsel-primary); font-size: 0.85rem;">
+            {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
+          </div>
+          <div class="text-start d-none d-md-block">
+            <span class="fw-semibold fs-8 d-block leading-none text-truncate" style="max-width: 120px;">{{ Auth::user()->name ?? 'Administrator' }}</span>
+            <small class="text-muted d-block fs-8" style="font-size: 0.7rem;">{{ Auth::user()->roles->pluck('name')->first() ?? 'Admin OPD' }}</small>
+          </div>
+          <i class="bi bi-chevron-down fs-8 text-muted ms-1 d-none d-md-inline"></i>
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end sidebar-dropdown">
+          <li class="px-3 py-2 border-bottom mb-1">
+            <span class="fw-bold fs-7 d-block">{{ Auth::user()->name ?? 'Administrator' }}</span>
+          </li>
+          @role('Super Admin')
+          <li>
+            <a class="dropdown-item" href="{{ route('settings.index') }}">
+              <i class="bi bi-gear me-2"></i>Pengaturan Sistem
+            </a>
+          </li>
+          @endrole
+          <li><hr class="dropdown-divider"></li>
+          <li>
+            <form method="POST" action="{{ route('logout') }}" id="logout-navbar-form">
+              @csrf
+              <button type="submit" class="dropdown-item text-danger">
+                <i class="bi bi-box-arrow-right me-2"></i>Keluar / Logout
+              </button>
+            </form>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
   </div>
 </nav>

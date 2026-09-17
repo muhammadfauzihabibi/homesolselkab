@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\KategoriBerita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -14,7 +15,7 @@ class BeritaController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Berita::query();
+        $query = Berita::with('kategoriBerita');
 
         if ($request->filled('search')) {
             $search = $request->input('search');
@@ -26,12 +27,13 @@ class BeritaController extends Controller
         }
 
         if ($request->filled('kategori')) {
-            $query->where('kategori', $request->input('kategori'));
+            $query->where('kategori_berita_id', $request->input('kategori'));
         }
 
         $beritas = $query->latest()->paginate(10)->withQueryString();
+        $kategoris = KategoriBerita::aktif()->ordered()->get();
 
-        return view('admin.berita.index', compact('beritas'));
+        return view('admin.berita.index', compact('beritas', 'kategoris'));
     }
 
     /**
@@ -39,7 +41,9 @@ class BeritaController extends Controller
      */
     public function create()
     {
-        return view('admin.berita.create');
+        $kategoris = KategoriBerita::aktif()->ordered()->get();
+
+        return view('admin.berita.create', compact('kategoris'));
     }
 
     /**
@@ -48,15 +52,21 @@ class BeritaController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'judul'          => 'required|string|max:255',
-            'ringkas'        => 'required|string|max:500',
-            'konten'         => 'nullable|string',
-            'kategori'       => 'required|string|max:100',
-            'tanggal_terbit' => 'required|date',
-            'terbit'         => 'nullable|boolean',
-            'image'          => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'judul'              => 'required|string|max:255',
+            'ringkas'            => 'required|string|max:500',
+            'konten'             => 'nullable|string',
+            'kategori_berita_id' => 'nullable|exists:kategori_beritas,id',
+            'tanggal_terbit'     => 'required|date',
+            'terbit'             => 'nullable|boolean',
+            'image'              => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
+        $kategoriBerita = $request->filled('kategori_berita_id')
+            ? KategoriBerita::find($request->input('kategori_berita_id'))
+            : null;
+
+        $validated['kategori'] = $kategoriBerita ? $kategoriBerita->nama : ($request->input('kategori') ?? 'Umum');
+        $validated['kategori_berita_id'] = $kategoriBerita?->id;
         $validated['slug'] = Str::slug($request->judul) . '-' . Str::random(5);
         $validated['terbit'] = $request->has('terbit') ? true : false;
 
@@ -85,7 +95,9 @@ class BeritaController extends Controller
      */
     public function edit(Berita $berita)
     {
-        return view('admin.berita.edit', compact('berita'));
+        $kategoris = KategoriBerita::aktif()->ordered()->get();
+
+        return view('admin.berita.edit', compact('berita', 'kategoris'));
     }
 
     /**
@@ -94,15 +106,21 @@ class BeritaController extends Controller
     public function update(Request $request, Berita $berita)
     {
         $validated = $request->validate([
-            'judul'          => 'required|string|max:255',
-            'ringkas'        => 'required|string|max:500',
-            'konten'         => 'nullable|string',
-            'kategori'       => 'required|string|max:100',
-            'tanggal_terbit' => 'required|date',
-            'terbit'         => 'nullable|boolean',
-            'image'          => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'judul'              => 'required|string|max:255',
+            'ringkas'            => 'required|string|max:500',
+            'konten'             => 'nullable|string',
+            'kategori_berita_id' => 'nullable|exists:kategori_beritas,id',
+            'tanggal_terbit'     => 'required|date',
+            'terbit'             => 'nullable|boolean',
+            'image'              => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
         ]);
 
+        $kategoriBerita = $request->filled('kategori_berita_id')
+            ? KategoriBerita::find($request->input('kategori_berita_id'))
+            : null;
+
+        $validated['kategori'] = $kategoriBerita ? $kategoriBerita->nama : ($request->input('kategori') ?? $berita->kategori ?? 'Umum');
+        $validated['kategori_berita_id'] = $kategoriBerita?->id;
         $validated['slug'] = Str::slug($request->judul) . '-' . Str::random(5);
         $validated['terbit'] = $request->has('terbit') ? true : false;
 

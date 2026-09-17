@@ -18,8 +18,7 @@ class OpdController extends Controller
             $search = $request->input('search');
             $query->where(function($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('url', 'like', "%{$search}%")
-                  ->orWhere('deskripsi', 'like', "%{$search}%");
+                  ->orWhere('url', 'like', "%{$search}%");
             });
         }
 
@@ -49,7 +48,6 @@ class OpdController extends Controller
             'nama'      => 'required|string|max:255',
             'url'       => 'required|url|max:255',
             'kategori'  => 'required|in:Dinas,Badan,Sekretariat,Layanan',
-            'deskripsi' => 'required|string|max:500',
             'aktif'     => 'nullable|boolean',
         ]);
 
@@ -77,7 +75,6 @@ class OpdController extends Controller
             'nama'      => 'required|string|max:255',
             'url'       => 'required|url|max:255',
             'kategori'  => 'required|in:Dinas,Badan,Sekretariat,Layanan',
-            'deskripsi' => 'required|string|max:500',
             'aktif'     => 'nullable|boolean',
         ]);
 

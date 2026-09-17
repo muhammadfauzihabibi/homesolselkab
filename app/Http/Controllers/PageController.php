@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Menu;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PageController extends Controller
@@ -42,28 +41,11 @@ class PageController extends Controller
             'judul'      => 'required|string|max:255',
             'deskripsi'  => 'nullable|string',
             'konten'     => 'nullable|string',
-            'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $validated['slug'] = Str::slug($request->judul);
 
         $validated['aktif'] = $request->has('aktif') ? true : false;
-
-        if ($request->hasFile('thumbnail')) {
-
-            $file = $request->file('thumbnail');
-
-            if ($file->isValid()) {
-
-                $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-
-                $validated['thumbnail'] = $file->storeAs(
-                    'pages',
-                    $filename,
-                    'public'
-                );
-            }
-        }
 
         Page::create($validated);
 
@@ -92,32 +74,11 @@ class PageController extends Controller
             'judul'      => 'required|string|max:255',
             'deskripsi'  => 'nullable|string',
             'konten'     => 'nullable|string',
-            'thumbnail'  => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $validated['slug'] = Str::slug($request->judul);
 
         $validated['aktif'] = $request->has('aktif') ? true : false;
-
-        if ($request->hasFile('thumbnail')) {
-
-            if (!empty($page->thumbnail)) {
-                Storage::disk('public')->delete($page->thumbnail);
-            }
-
-            $file = $request->file('thumbnail');
-
-            if ($file->isValid()) {
-
-                $filename = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
-
-                $validated['thumbnail'] = $file->storeAs(
-                    'pages',
-                    $filename,
-                    'public'
-                );
-            }
-        }
 
         $page->update($validated);
 
@@ -131,10 +92,6 @@ class PageController extends Controller
      */
     public function destroy(Page $page)
     {
-        if (!empty($page->thumbnail)) {
-            Storage::disk('public')->delete($page->thumbnail);
-        }
-
         $page->delete();
 
         return redirect()

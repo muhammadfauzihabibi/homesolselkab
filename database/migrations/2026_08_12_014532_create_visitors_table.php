@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('visitors', function (Blueprint $table) {
             $table->id();
+            $table->string('session_id')->nullable()->index();
             $table->string('ip_address')->nullable();
             $table->string('browser')->nullable();
             $table->string('platform')->nullable();

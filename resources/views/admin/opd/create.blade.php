@@ -66,21 +66,7 @@
         </div>
       </div>
 
-      <!-- Deskripsi -->
-      <div class="mb-4">
-        <label for="deskripsi" class="form-label fw-bold text-main">Deskripsi Singkat Layanan OPD <span class="text-danger">*</span></label>
-        <textarea name="deskripsi" 
-                  id="deskripsi" 
-                  rows="3" 
-                  class="form-control border-0 py-2.5 px-3 fs-7 @error('deskripsi') is-invalid @enderror" 
-                  style="background: var(--card-sub-bg); color: var(--text-dark); border-radius: 16px;"
-                  placeholder="Jelaskan peran dan bidang tugas utama OPD ini..." 
-                  required>{{ old('deskripsi') }}</textarea>
-        <div class="form-text text-muted-custom fs-8 mt-1">Maksimal 500 karakter.</div>
-        @error('deskripsi')
-          <div class="invalid-feedback">{{ $message }}</div>
-        @enderror
-      </div>
+
 
       <!-- Status Aktif Switch -->
       <div class="p-3 rounded-4 mb-4" style="background: var(--card-sub-bg);">

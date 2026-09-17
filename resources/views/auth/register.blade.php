@@ -35,14 +35,14 @@
             <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 16px; border-bottom-left-radius: 16px;">
                 <i class="bi bi-person-badge"></i>
             </span>
-            <input type="text" 
-                   name="name" 
-                   id="name" 
-                   class="form-control border-0 py-2.5 px-3 fs-7 @error('name') is-invalid @enderror" 
-                   style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 16px; border-bottom-right-radius: 16px;" 
-                   placeholder="Nama Lengkap beserta Gelar" 
-                   value="{{ old('name') }}" 
-                   required 
+            <input type="text"
+                   name="name"
+                   id="name"
+                   class="form-control border-0 py-2.5 px-3 fs-7 @error('name') is-invalid @enderror"
+                   style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 16px; border-bottom-right-radius: 16px;"
+                   placeholder="Nama Lengkap beserta Gelar"
+                   value="{{ old('name') }}"
+                   required
                    autofocus>
         </div>
         @error('name')
@@ -57,13 +57,13 @@
             <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 16px; border-bottom-left-radius: 16px;">
                 <i class="bi bi-person"></i>
             </span>
-            <input type="text" 
-                   name="username" 
-                   id="username" 
-                   class="form-control border-0 py-2.5 px-3 fs-7 @error('username') is-invalid @enderror" 
-                   style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 16px; border-bottom-right-radius: 16px;" 
-                   placeholder="Masukkan Username" 
-                   value="{{ old('username') }}" 
+            <input type="text"
+                   name="username"
+                   id="username"
+                   class="form-control border-0 py-2.5 px-3 fs-7 @error('username') is-invalid @enderror"
+                   style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 16px; border-bottom-right-radius: 16px;"
+                   placeholder="Masukkan Username"
+                   value="{{ old('username') }}"
                    required>
         </div>
         @error('username')
@@ -78,17 +78,17 @@
             <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 16px; border-bottom-left-radius: 16px;">
                 <i class="bi bi-lock"></i>
             </span>
-            <input type="password" 
-                   name="password" 
-                   id="password" 
-                   class="form-control border-0 py-2.5 px-3 fs-7 @error('password') is-invalid @enderror" 
-                   style="background: var(--card-sub-bg); color: var(--text-dark);" 
-                   placeholder="Minimal 6 Karakter" 
+            <input type="password"
+                   name="password"
+                   id="password"
+                   class="form-control border-0 py-2.5 px-3 fs-7 @error('password') is-invalid @enderror"
+                   style="background: var(--card-sub-bg); color: var(--text-dark);"
+                   placeholder="Minimal 6 Karakter"
                    required>
-            <button class="btn border-0 ps-2 pe-3" 
-                    type="button" 
+            <button class="btn border-0 ps-2 pe-3"
+                    type="button"
                     style="background: var(--card-sub-bg); color: var(--text-muted); border-top-right-radius: 16px; border-bottom-right-radius: 16px;"
-                    onclick="togglePassword('password', 'toggleIcon1')" 
+                    onclick="togglePassword('password', 'toggleIcon1')"
                     title="Tampilkan/Sembunyikan Kata Sandi">
                 <i class="bi bi-eye" id="toggleIcon1"></i>
             </button>
@@ -105,17 +105,17 @@
             <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 16px; border-bottom-left-radius: 16px;">
                 <i class="bi bi-shield-lock"></i>
             </span>
-            <input type="password" 
-                   name="password_confirmation" 
-                   id="password_confirmation" 
-                   class="form-control border-0 py-2.5 px-3 fs-7" 
-                   style="background: var(--card-sub-bg); color: var(--text-dark);" 
-                   placeholder="Ulangi Kata Sandi" 
+            <input type="password"
+                   name="password_confirmation"
+                   id="password_confirmation"
+                   class="form-control border-0 py-2.5 px-3 fs-7"
+                   style="background: var(--card-sub-bg); color: var(--text-dark);"
+                   placeholder="Ulangi Kata Sandi"
                    required>
-            <button class="btn border-0 ps-2 pe-3" 
-                    type="button" 
+            <button class="btn border-0 ps-2 pe-3"
+                    type="button"
                     style="background: var(--card-sub-bg); color: var(--text-muted); border-top-right-radius: 16px; border-bottom-right-radius: 16px;"
-                    onclick="togglePassword('password_confirmation', 'toggleIcon2')" 
+                    onclick="togglePassword('password_confirmation', 'toggleIcon2')"
                     title="Tampilkan/Sembunyikan Kata Sandi">
                 <i class="bi bi-eye" id="toggleIcon2"></i>
             </button>

@@ -27,7 +27,7 @@ class AplikasiDinasController extends Controller
             $query->where('aktif', $status);
         }
 
-        $aplikasiDinasList = $query->orderBy('urutan', 'asc')->latest()->paginate(10)->withQueryString();
+        $aplikasiDinasList = $query->latest()->paginate(10)->withQueryString();
 
         return view('admin.aplikasi_dinas.index', compact('aplikasiDinasList'));
     }
@@ -48,7 +48,6 @@ class AplikasiDinasController extends Controller
         $validated = $request->validate([
             'nama'   => 'required|string|max:255',
             'url'    => 'required|url|max:255',
-            'urutan' => 'nullable|integer|min:0',
             'aktif'  => 'nullable|boolean',
         ], [
             'nama.required' => 'Nama aplikasi wajib diisi.',
@@ -56,11 +55,8 @@ class AplikasiDinasController extends Controller
             'url.required'  => 'URL aplikasi wajib diisi.',
             'url.url'       => 'Format URL tidak valid (gunakan http:// atau https://).',
             'url.max'       => 'URL maksimal 255 karakter.',
-            'urutan.integer'=> 'Urutan harus berupa angka.',
-            'urutan.min'    => 'Urutan tidak boleh kurang dari 0.',
         ]);
 
-        $validated['urutan'] = $request->input('urutan', 0);
         $validated['aktif']  = $request->has('aktif') ? true : false;
 
         AplikasiDinas::create($validated);
@@ -84,7 +80,6 @@ class AplikasiDinasController extends Controller
         $validated = $request->validate([
             'nama'   => 'required|string|max:255',
             'url'    => 'required|url|max:255',
-            'urutan' => 'nullable|integer|min:0',
             'aktif'  => 'nullable|boolean',
         ], [
             'nama.required' => 'Nama aplikasi wajib diisi.',
@@ -92,11 +87,8 @@ class AplikasiDinasController extends Controller
             'url.required'  => 'URL aplikasi wajib diisi.',
             'url.url'       => 'Format URL tidak valid (gunakan http:// atau https://).',
             'url.max'       => 'URL maksimal 255 karakter.',
-            'urutan.integer'=> 'Urutan harus berupa angka.',
-            'urutan.min'    => 'Urutan tidak boleh kurang dari 0.',
         ]);
 
-        $validated['urutan'] = $request->input('urutan', 0);
         $validated['aktif']  = $request->has('aktif') ? true : false;
 
         $aplikasiDinas->update($validated);

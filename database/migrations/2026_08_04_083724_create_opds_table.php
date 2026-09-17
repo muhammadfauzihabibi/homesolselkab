@@ -16,10 +16,9 @@ return new class extends Migration
             $table->string('nama');
             $table->string('url');
             $table->enum('kategori', ['Dinas', 'Badan', 'Sekretariat', 'Layanan']);
-            $table->string('deskripsi', 500);
             // Baru tampil publik setelah subdomain diverifikasi aktif oleh
             // Diskominfo — mencegah link mati tayang otomatis.
-            $table->boolean('aktif')->default(false);
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
 
             $table->index(['aktif', 'kategori']);

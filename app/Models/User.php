@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,7 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Models\Concerns\LogsActivity;
 use Spatie\Activitylog\Support\LogOptions;
 
-#[Fillable(['name', 'username', 'password', 'is_active'])]
+#[Fillable(['name', 'username', 'password', 'is_active', 'role_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -27,6 +28,23 @@ class User extends Authenticatable
             ->logOnly(['name', 'username', 'is_active'])
             ->logOnlyDirty()
             ->useLogName('user');
+    }
+
+    /**
+     * Relasi ke tabel roles (Spatie).
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(\Spatie\Permission\Models\Role::class, 'role_id');
+    }
+
+    /**
+     * Sync role_id setelah assign/remove role.
+     */
+    public function syncRoleId(): void
+    {
+        $firstRole = $this->roles()->first();
+        $this->updateQuietly(['role_id' => $firstRole?->id]);
     }
 
     /**

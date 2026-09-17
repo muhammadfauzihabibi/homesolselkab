@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function updateActiveStates(editor, toolbar) {
     if (!toolbar) return;
-    
+
     // Simple formats
     const actions = ['bold', 'italic', 'underline', 'strike', 'blockquote', 'bullet-list', 'ordered-list', 'task-list'];
     actions.forEach(action => {
@@ -139,7 +139,7 @@ function updateActiveStates(editor, toolbar) {
             if(action === 'bullet-list') cmd = 'bulletList';
             if(action === 'ordered-list') cmd = 'orderedList';
             if(action === 'task-list') cmd = 'taskList';
-            
+
             btn.classList.toggle('active', editor.isActive(cmd));
         }
     });
@@ -183,9 +183,9 @@ function setupToolbar(editor, wrapper) {
             case 'underline': editor.chain().focus().toggleUnderline().run(); break;
             case 'strike': editor.chain().focus().toggleStrike().run(); break;
             case 'paragraph': editor.chain().focus().setParagraph().run(); break;
-            case 'heading': 
+            case 'heading':
                 const level = parseInt(btn.getAttribute('data-level'));
-                editor.chain().focus().toggleHeading({ level }).run(); 
+                editor.chain().focus().toggleHeading({ level }).run();
                 break;
             case 'align-left': editor.chain().focus().setTextAlign('left').run(); break;
             case 'align-center': editor.chain().focus().setTextAlign('center').run(); break;
@@ -233,6 +233,39 @@ function setupToolbar(editor, wrapper) {
                     }
                 }
                 break;
+            case 'download-link':
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Sisipkan Tombol Unduh',
+                        html: '<input id="download-link-url" class="swal2-input" placeholder="https://contoh.go.id/unduh/file-slug"><input id="download-link-label" class="swal2-input" placeholder="Teks tombol, contoh: Unduh File">',
+                        focusConfirm: false,
+                        showCancelButton: true,
+                        confirmButtonText: 'Sisipkan',
+                        cancelButtonText: 'Batal',
+                        confirmButtonColor: '#0f172a',
+                        preConfirm: () => {
+                            const url = document.getElementById('download-link-url').value.trim();
+                            const label = document.getElementById('download-link-label').value.trim() || 'Unduh File';
+                            if (!url) {
+                                Swal.showValidationMessage('URL unduhan wajib diisi.');
+                                return false;
+                            }
+                            return { url, label };
+                        },
+                    }).then((result) => {
+                        if (!result.isConfirmed) return;
+                        let url = result.value.url;
+                        if (!/^https?:\/\//i.test(url) && !url.startsWith('/') && !url.startsWith('#')) {
+                            url = 'https://' + url;
+                        }
+                        editor.chain().focus().insertContent({
+                            type: 'text',
+                            text: result.value.label,
+                            marks: [{ type: 'link', attrs: { href: url, target: '_blank', rel: 'noopener noreferrer', class: 'download-link' } }],
+                        }).run();
+                    });
+                }
+                break;
             case 'image':
                 uploadImagePrompt(editor);
                 break;
@@ -266,7 +299,7 @@ function setupToolbar(editor, wrapper) {
                     if (yt) editor.chain().focus().setYoutubeVideo({ src: yt.trim() }).run();
                 }
                 break;
-            
+
             // Table Core
             case 'table':
                 editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
@@ -284,7 +317,7 @@ function setupToolbar(editor, wrapper) {
                 const color = btn.getAttribute('data-color');
                 editor.chain().focus().setCellAttribute('backgroundColor', color).run();
                 break;
-                
+
             // Custom Accordion — judul (summary) + tabel langsung di bawahnya
             case 'accordion':
                 editor.chain().focus().insertContent({
@@ -339,7 +372,7 @@ function uploadImagePrompt(editor) {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/jpeg, image/png, image/webp, image/gif';
-    
+
     input.onchange = async () => {
         if (input.files.length > 0) {
             const file = input.files[0];
@@ -347,7 +380,7 @@ function uploadImagePrompt(editor) {
             formData.append('file', file);
 
             const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-            
+
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: 'Mengunggah Gambar...',
@@ -363,7 +396,7 @@ function uploadImagePrompt(editor) {
                     headers: { 'X-CSRF-TOKEN': token },
                     body: formData
                 });
-                
+
                 const data = await res.json();
                 if (data.location) {
                     if (typeof Swal !== 'undefined') Swal.close();
@@ -384,7 +417,7 @@ function uploadImagePrompt(editor) {
             }
         }
     };
-    
+
     input.click();
 }
 
@@ -392,7 +425,7 @@ function uploadPdfPrompt(editor) {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'application/pdf';
-    
+
     input.onchange = async () => {
         if (input.files.length > 0) {
             const file = input.files[0];
@@ -400,7 +433,7 @@ function uploadPdfPrompt(editor) {
             formData.append('file', file);
 
             const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
-            
+
             if (typeof Swal !== 'undefined') {
                 Swal.fire({
                     title: 'Mengunggah PDF...',
@@ -416,7 +449,7 @@ function uploadPdfPrompt(editor) {
                     headers: { 'X-CSRF-TOKEN': token },
                     body: formData
                 });
-                
+
                 const data = await res.json();
                 if (data.location) {
                     if (typeof Swal !== 'undefined') Swal.close();
@@ -450,7 +483,7 @@ function uploadPdfPrompt(editor) {
             }
         }
     };
-    
+
     input.click();
 }
 

@@ -15,7 +15,6 @@ class Opd extends Model
         'nama',
         'url',
         'kategori',
-        'deskripsi',
         'aktif',
     ];
 

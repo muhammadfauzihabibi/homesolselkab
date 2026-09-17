@@ -14,12 +14,10 @@ class AplikasiDinas extends Model
     protected $fillable = [
         'nama',
         'url',
-        'urutan',
         'aktif',
     ];
 
     protected $casts = [
         'aktif' => 'boolean',
-        'urutan' => 'integer',
     ];
 }

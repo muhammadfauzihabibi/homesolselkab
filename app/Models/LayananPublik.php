@@ -14,12 +14,9 @@ class LayananPublik extends Model
     protected $fillable = [
         'nama',
         'url',
-        'urutan',
         'aktif',
-        'deskripsi'
     ];
     protected $casts = [
-        'urutan' => 'integer',
         'aktif' => 'boolean',
     ];
 }

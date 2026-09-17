@@ -105,9 +105,7 @@
             font-weight: 800;
             line-height: 1.25;
             margin-bottom: 16px;
-            background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff;
         }
 
         .hero-desc {

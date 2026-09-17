@@ -7,67 +7,64 @@
   <!-- Header Page Title -->
   <div class="d-flex align-items-center justify-content-between mb-4">
     <div>
-      <h1 class="h2 fw-extrabold mb-1 text-main">Edit Menu</h1>
-      <p class="text-muted-custom mb-0 fs-6">Form pembaruan data menu portal daerah.</p>
+      <h1 class="admin-page-title">Edit Menu</h1>
+      <p class="admin-page-subtitle">Form pembaruan data menu portal daerah.</p>
     </div>
   </div>
 
-  <!-- Form Card (Full Width Content Area) -->
-  <div class="glass-card p-4 p-md-5 shadow-sm w-100">
+  <!-- Form Card -->
+  <div class="glass-card p-4 w-100">
     <form action="{{ route('menu.update', $menu->id) }}" method="POST">
       @csrf
       @method('PUT')
 
-      <div class="row g-4">
-        
+      <div class="row g-3">
+
         <!-- 1. Nama Menu -->
         <div class="col-12">
-          <label for="nama" class="form-label fw-bold text-main">Nama Menu <span class="text-danger">*</span></label>
-          <input type="text" 
-                 class="form-control border-0 py-2.5 px-3 fs-7 @error('nama') is-invalid @enderror" 
-                 style="background: var(--card-sub-bg); color: var(--text-dark); border-radius: 999px;" 
-                 id="nama" 
-                 name="nama" 
-                 value="{{ old('nama', $menu->nama) }}" 
-                 placeholder="Masukkan nama menu (contoh: Profil Daerah)" 
-                 required 
+          <label for="nama" class="form-label fw-bold">Nama Menu <span class="text-danger">*</span></label>
+          <input type="text"
+                 class="form-control @error('nama') is-invalid @enderror"
+                 id="nama"
+                 name="nama"
+                 value="{{ old('nama', $menu->nama) }}"
+                 placeholder="Masukkan nama menu (contoh: Profil Daerah)"
+                 required
                  autofocus>
           @error('nama')
-            <div class="invalid-feedback d-block ms-3">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
 
         <!-- 2. Tipe Menu -->
         <div class="col-md-6">
-          <label for="tipe" class="form-label fw-bold text-main">Tipe Menu <span class="text-danger">*</span></label>
+          <label for="tipe" class="form-label fw-bold">Tipe Menu <span class="text-danger">*</span></label>
           <div class="input-group">
-            <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 999px; border-bottom-left-radius: 999px;">
-              <i class="bi bi-list-nested"></i>
+            <span class="input-group-text border-0 ps-3">
+              <i class="bi bi-list-nested text-muted"></i>
             </span>
-            <select class="form-select border-0 py-2.5 px-3 fs-7 fw-semibold @error('tipe') is-invalid @enderror" 
-                    style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 999px; border-bottom-right-radius: 999px;" 
-                    id="tipe" 
-                    name="tipe" 
+            <select class="form-select border-0 py-2 fs-7 fw-semibold @error('tipe') is-invalid @enderror"
+                    id="tipe"
+                    name="tipe"
                     required>
               <option value="internal" {{ old('tipe', $menu->tipe) == 'internal' ? 'selected' : '' }}>Halaman Internal (Dropdown / Parent)</option>
               <option value="external" {{ old('tipe', $menu->tipe) == 'external' ? 'selected' : '' }}>Link Eksternal</option>
             </select>
           </div>
           @error('tipe')
-            <div class="invalid-feedback d-block ms-3">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
 
         <!-- 3. Parent Menu -->
         <div class="col-md-6">
-          <label for="parent_id" class="form-label fw-bold text-main">Parent Menu</label>
+          <label for="parent_id" class="form-label fw-bold">Parent Menu</label>
           <div class="input-group">
-            <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 999px; border-bottom-left-radius: 999px;">
-              <i class="bi bi-diagram-2"></i>
+            <span class="input-group-text border-0 ps-3">
+              <i class="bi bi-diagram-2 text-muted"></i>
             </span>
-            <select class="form-select border-0 py-2.5 px-3 fs-7 fw-semibold @error('parent_id') is-invalid @enderror" 
-                    style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 999px; border-bottom-right-radius: 999px;" 
-                    id="parent_id" 
+            <select class="form-select border-0 py-2 fs-7 fw-semibold @error('parent_id') is-invalid @enderror"
+                    id="parent_id"
                     name="parent_id">
               <option value="">-- Menu Utama (Root) --</option>
               @foreach($parents as $parent)
@@ -79,64 +76,59 @@
               @endforeach
             </select>
           </div>
-          <small class="text-muted-custom mt-1 d-block fs-8 ms-3">Pilih parent jika menu ini merupakan sub-menu.</small>
+          <small class="text-muted mt-1 d-block fs-8">Pilih parent jika menu ini merupakan sub-menu.</small>
           @error('parent_id')
-            <div class="invalid-feedback d-block ms-3">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
 
         <!-- 4. URL Eksternal (Hanya Muncul Jika Tipe = external) -->
         <div class="col-12 d-none" id="container_url">
-          <label for="url" class="form-label fw-bold text-main">URL Eksternal <span class="text-danger">*</span></label>
+          <label for="url" class="form-label fw-bold">URL Eksternal <span class="text-danger">*</span></label>
           <div class="input-group">
-            <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 999px; border-bottom-left-radius: 999px;">
-              <i class="bi bi-link-45deg"></i>
+            <span class="input-group-text border-0 ps-3">
+              <i class="bi bi-link-45deg text-muted"></i>
             </span>
-            <input type="url" 
-                   class="form-control border-0 py-2.5 px-3 fs-7 @error('url') is-invalid @enderror" 
-                   style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 999px; border-bottom-right-radius: 999px;" 
-                   id="url" 
-                   name="url" 
-                   value="{{ old('url', $menu->url) }}" 
+            <input type="url"
+                   class="form-control border-0 py-2 fs-7 @error('url') is-invalid @enderror"
+                   id="url"
+                   name="url"
+                   value="{{ old('url', $menu->url) }}"
                    placeholder="https://ppid.solselkab.go.id">
           </div>
-          <small class="text-muted-custom mt-1 d-block fs-8 ms-3">Sertakan protokol lengkap (http:// atau https://).</small>
+          <small class="text-muted mt-1 d-block fs-8">Sertakan protokol lengkap (http:// atau https://).</small>
           @error('url')
-            <div class="invalid-feedback d-block ms-3">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
 
         <!-- 5. Urutan Tampil -->
-        <div class="col-12">
-          <label for="urutan" class="form-label fw-bold text-main">Urutan Tampil</label>
+        <div class="col-12 mb-3">
+          <label for="urutan" class="form-label fw-bold">Urutan Tampil</label>
           <div class="input-group">
-            <span class="input-group-text border-0 ps-3" style="background: var(--card-sub-bg); color: var(--text-muted); border-top-left-radius: 999px; border-bottom-left-radius: 999px;">
-              <i class="bi bi-sort-numeric-down"></i>
+            <span class="input-group-text border-0 ps-3">
+              <i class="bi bi-sort-numeric-down text-muted"></i>
             </span>
-            <input type="number" 
-                   class="form-control border-0 py-2.5 px-3 fs-7 @error('urutan') is-invalid @enderror" 
-                   style="background: var(--card-sub-bg); color: var(--text-dark); border-top-right-radius: 999px; border-bottom-right-radius: 999px;" 
-                   id="urutan" 
-                   name="urutan" 
-                   value="{{ old('urutan', $menu->urutan ?? 0) }}" 
+            <input type="number"
+                   class="form-control border-0 py-2 fs-7 @error('urutan') is-invalid @enderror"
+                   id="urutan"
+                   name="urutan"
+                   value="{{ old('urutan', $menu->urutan ?? 0) }}"
                    placeholder="0">
           </div>
           @error('urutan')
-            <div class="invalid-feedback d-block ms-3">{{ $message }}</div>
+            <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
 
       </div>
 
       <!-- Action Buttons -->
-      <div class="d-flex flex-wrap gap-2 justify-content-end pt-4 mt-4" style="border-top: 1px solid var(--card-sub-bg);">
-        <a href="{{ url()->previous() }}" class="btn btn-glass-pill px-4 py-2 fs-7 d-flex align-items-center gap-2">
-          <i class="bi bi-arrow-left"></i> Kembali ke Daftar
+      <div class="d-flex flex-wrap gap-2 justify-content-end pt-3" style="border-top: 1px solid var(--card-sub-bg);">
+        <a href="{{ route('menu.index') }}" class="btn btn-glass-pill px-4 py-2 fs-7 d-flex align-items-center gap-2">
+          <i class="bi bi-arrow-left"></i> Kembali
         </a>
-        <button type="reset" class="btn btn-glass-pill px-4 py-2 fs-7">Reset</button>
-        <button type="submit" class="btn btn-dark-pill px-4 py-2 fs-7 d-flex align-items-center gap-2">
-          <i class="bi bi-save"></i> Perbarui Menu
-        </button>
+        <button type="submit" class="btn btn-primary px-4 py-2 fs-7">Perbarui Menu</button>
       </div>
     </form>
   </div>
@@ -160,10 +152,7 @@
       }
     }
 
-    // Pengecekan awal saat pertama kali dimuat
     toggleFields();
-
-    // Event listener setiap kali pilihan tipe menu berubah
     tipeSelect.addEventListener('change', toggleFields);
   });
 </script>

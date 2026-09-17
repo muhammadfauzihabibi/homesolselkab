@@ -14,11 +14,15 @@ return new class extends Migration
         Schema::create('beritas', function (Blueprint $table) {
             $table->id();
             $table->string('judul');
+            $table->string('slug')->nullable()->unique();
+            $table->string('image')->nullable();
             $table->string('ringkas', 500);
             $table->string('kategori');
             $table->date('tanggal_terbit');
+            $table->longText('konten')->nullable();
+            $table->unsignedBigInteger('views_count')->default(0);
             // Berita disiapkan sebagai draft dulu sebelum tayang publik.
-            $table->boolean('terbit')->default(false);
+            $table->boolean('terbit')->default(true);
             $table->timestamps();
 
             $table->index(['terbit', 'tanggal_terbit']);

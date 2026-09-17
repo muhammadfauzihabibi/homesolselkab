@@ -7,10 +7,10 @@
   <title>@yield('title', 'Portal Resmi Pemerintah Kabupaten Solok Selatan')</title>
   <link rel="icon" type="image/png" href="{{ asset('images/lambangsolsel.png') }}">
 
-  <!-- Google Fonts: Plus Jakarta Sans -->
+  <!-- Google Fonts: Noto Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5.3 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,12 +20,14 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
   <!-- Custom CSS -->
-  <link rel="stylesheet" href="{{ asset('css/front.css') }}?v=20260903">
+  <link rel="stylesheet" href="{{ asset('css/front.css') }}?v={{ time() }}">
   <link rel="stylesheet" href="{{ asset('css/komdigi-widget.css') }}">
-  
+
   @yield('styles')
 </head>
 <body class="d-flex flex-column min-vh-100">
+
+
 
   <!-- Floating Navbar Component -->
   <x-frontend-navbar />
@@ -62,7 +64,7 @@
       const getPreferredTheme = () => {
         const storedTheme = getStoredTheme()
         if (storedTheme) return storedTheme
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        return 'light'
       }
 
       const setTheme = theme => {
@@ -75,9 +77,9 @@
         if (!icon) return
 
         if (theme === 'dark') {
-          icon.className = 'bi bi-sun-fill text-warning fs-6'
+          icon.className = 'bi bi-sun-fill fs-6'
         } else {
-          icon.className = 'bi bi-moon-stars-fill text-dark fs-6'
+          icon.className = 'bi bi-moon-stars-fill fs-6'
         }
       }
 
@@ -95,12 +97,13 @@
           })
         }
 
-        // Auto-Hide Navbar saat Scroll Ke Bawah
+        // Auto-Hide Navbar & Marquee saat Scroll Ke Bawah
         const navbarWrapper = document.getElementById('navbar-wrapper')
+        const marqueeBanner = document.getElementById('marquee-banner')
         let lastScrollY = window.pageYOffset || document.documentElement.scrollTop
         let ticking = false
 
-        if (navbarWrapper) {
+        if (navbarWrapper || marqueeBanner) {
           window.addEventListener('scroll', () => {
             if (!ticking) {
               window.requestAnimationFrame(() => {
@@ -109,9 +112,11 @@
 
                 if (!isMobileMenuOpen) {
                   if (currentScrollY > lastScrollY && currentScrollY > 70) {
-                    navbarWrapper.classList.add('navbar-hidden')
+                    if (navbarWrapper) navbarWrapper.classList.add('navbar-hidden')
+                    if (marqueeBanner) marqueeBanner.classList.add('marquee-hidden')
                   } else {
-                    navbarWrapper.classList.remove('navbar-hidden')
+                    if (navbarWrapper) navbarWrapper.classList.remove('navbar-hidden')
+                    if (marqueeBanner) marqueeBanner.classList.remove('marquee-hidden')
                   }
                 }
 
@@ -164,6 +169,8 @@
       });
     });
   </script>
+
+
 
   @yield('scripts')
 </body>

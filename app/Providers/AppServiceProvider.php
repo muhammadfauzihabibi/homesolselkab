@@ -41,7 +41,6 @@ class AppServiceProvider extends ServiceProvider
         Event::listen(Logout::class, [LogAuthentication::class, 'handleLogout']);
 
         View::composer('*', function ($view) {
-
             $menus = Menu::with([
                 'children' => function ($query) {
                     $query->where('aktif', true)
@@ -53,7 +52,13 @@ class AppServiceProvider extends ServiceProvider
             ->orderBy('urutan')
             ->get();
 
-            $view->with('menus', $menus);
+            try {
+                $settings = \App\Models\Setting::pluck('value', 'key')->all();
+            } catch (\Exception $e) {
+                $settings = [];
+            }
+
+            $view->with('menus', $menus)->with('settings', $settings);
         });
     }
 }

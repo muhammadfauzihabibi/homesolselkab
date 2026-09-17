@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('menu_id')->constrained()->cascadeOnDelete();
             $table->string('judul');
+            $table->string('slug')->unique();
             $table->text('deskripsi')->nullable();
-            $table->string('thumbnail')->nullable();
             $table->longText('konten')->nullable();
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }

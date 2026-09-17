@@ -15,6 +15,7 @@ class ModulePermissionSeeder extends Seeder
         // Daftar nama menu/modul yang ada di sistem
         $modules = [
             'berita',
+            'poster',
             'opd',
             'kecamatan',
             'aplikasi-dinas',
@@ -22,6 +23,7 @@ class ModulePermissionSeeder extends Seeder
             'pengumuman',
             'agenda',
             'dokumentasi',
+            'unduhan',
             'menu',
             'page',
             'sarana-prasarana',

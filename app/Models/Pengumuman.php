@@ -26,7 +26,6 @@ class Pengumuman extends Model
         'title',
         'slug',
         'content',
-        'thumbnail',
         'aktif',
     ];
 

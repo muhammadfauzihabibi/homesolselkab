@@ -28,6 +28,7 @@ class Berita extends Model
         'ringkas',
         'konten',
         'kategori',
+        'kategori_berita_id',
         'tanggal_terbit',
         'terbit',
         'views_count',
@@ -37,7 +38,13 @@ class Berita extends Model
         'tanggal_terbit' => 'date',
         'terbit' => 'boolean',
         'views_count' => 'integer',
+        'kategori_berita_id' => 'integer',
     ];
+
+    public function kategoriBerita()
+    {
+        return $this->belongsTo(KategoriBerita::class, 'kategori_berita_id');
+    }
 
     /**
      * Scope query untuk berita terpopuler (dibaca terbanyak)

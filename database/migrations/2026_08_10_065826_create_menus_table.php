@@ -22,6 +22,13 @@ return new class extends Migration
                 ->nullOnDelete();
             $table->integer('urutan')->default(0);
             $table->boolean('aktif')->default(true);
+            $table->enum('tipe', [
+                'menu',
+                'page',
+                'external',
+                'internal'
+            ])->default('menu');
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }

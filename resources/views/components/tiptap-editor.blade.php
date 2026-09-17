@@ -3,7 +3,7 @@
 <div class="tiptap-wrapper border rounded-4 bg-white mb-3 shadow-sm d-flex flex-column" data-bs-theme="light">
     <!-- Toolbar -->
     <div class="tiptap-toolbar p-2 border-bottom d-flex flex-wrap gap-1 bg-light rounded-top-4" style="position: sticky; top: 0; z-index: 10;">
-        
+
         <!-- Undo / Redo -->
         <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn-outline-secondary" data-tiptap-action="undo" title="Undo"><i class="bi bi-arrow-counterclockwise"></i></button>
@@ -49,12 +49,13 @@
             <button type="button" class="btn btn-outline-secondary" data-tiptap-action="ordered-list" title="Ordered List"><i class="bi bi-list-ol"></i></button>
             <button type="button" class="btn btn-outline-secondary" data-tiptap-action="task-list" title="Task List"><i class="bi bi-ui-checks"></i></button>
         </div>
-        
+
         <!-- Elements -->
         <div class="btn-group btn-group-sm">
             <button type="button" class="btn btn-outline-secondary" data-tiptap-action="blockquote" title="Blockquote"><i class="bi bi-quote"></i></button>
             <button type="button" class="btn btn-outline-secondary" data-tiptap-action="horizontal-rule" title="Horizontal Rule"><i class="bi bi-hr"></i></button>
             <button type="button" class="btn btn-outline-secondary" data-tiptap-action="link" title="Link"><i class="bi bi-link-45deg"></i></button>
+            <button type="button" class="btn btn-outline-primary" data-tiptap-action="download-link" title="Sisipkan Tombol Unduh"><i class="bi bi-download"></i></button>
         </div>
 
         <!-- Insert Media -->
@@ -86,7 +87,7 @@
                 <button type="button" class="btn btn-outline-info" data-tiptap-action="table-split-cell" title="Split Cell"><i class="bi bi-arrows-expand"></i></button>
                 <button type="button" class="btn btn-outline-danger" data-tiptap-action="table-delete" title="Delete Table"><i class="bi bi-x-square"></i></button>
             </div>
-            
+
             <!-- Table Colors Dropdown -->
             <div class="dropdown">
                 <button class="btn btn-sm btn-outline-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" title="Warna Tabel">
@@ -107,7 +108,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Accordion -->
         <div class="btn-group btn-group-sm ps-2">
             <button type="button" class="btn btn-outline-secondary" data-tiptap-action="accordion" title="Insert Accordion"><i class="bi bi-view-list"></i>Table Accordion</button>
@@ -192,7 +193,7 @@
         background-color: #e9ecef;
         box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     }
-    
+
     /* Dark Mode Adjustments */
     [data-bs-theme="dark"] .tiptap-wrapper {
         background-color: var(--bs-gray-900) !important;
@@ -209,7 +210,7 @@
     [data-bs-theme="dark"] .tiptap-editor-content .ProseMirror table th {
         border-color: var(--bs-gray-700);
     }
-    
+
     /* Accordion Details/Summary Style — always open in editor */
     .tiptap-editor-content .ProseMirror details {
         border: 2px solid #3b82f6;
@@ -225,7 +226,7 @@
         font-weight: 700;
         font-size: 0.95rem;
         padding: 0.6em 0.9em;
-        background: linear-gradient(90deg, #1d4ed8, #3b82f6);
+        background: #1d4ed8;
         color: #ffffff;
         cursor: default;  /* non-interactive in editor */
         border-bottom: 2px solid #3b82f6;
@@ -235,7 +236,7 @@
         pointer-events: auto;
     }
     [data-bs-theme="dark"] .tiptap-editor-content .ProseMirror summary {
-        background: linear-gradient(90deg, #1e3a8a, #2563eb);
+        background: #1e3a8a;
         border-color: #60a5fa;
     }
     .tiptap-editor-content .ProseMirror details > *:not(summary) {

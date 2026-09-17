@@ -37,7 +37,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $roles = Role::orderBy('name')->get();
+        $roles = Role::where('name', '!=', 'Super Admin')->orderBy('name')->get();
         return view('admin.users.create', compact('roles'));
     }
 
@@ -47,7 +47,11 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'role' => 'required|exists:roles,name',
+            'role' => ['required', 'exists:roles,name', function ($attribute, $value, $fail) {
+                if ($value === 'Super Admin') {
+                    $fail('Role Super Admin tidak dapat dipilih untuk user baru.');
+                }
+            }],
         ], [
             'name.required' => 'Nama wajib diisi.',
             'username.required' => 'Username wajib diisi.',
@@ -78,7 +82,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $roles = Role::orderBy('name')->get();
+        $roles = Role::where('name', '!=', 'Super Admin')->orderBy('name')->get();
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
@@ -87,7 +91,11 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-            'role' => 'required|exists:roles,name',
+            'role' => ['required', 'exists:roles,name', function ($attribute, $value, $fail) {
+                if ($value === 'Super Admin') {
+                    $fail('Role Super Admin tidak dapat dipilih untuk user ini.');
+                }
+            }],
         ], [
             'name.required' => 'Nama wajib diisi.',
             'username.required' => 'Username wajib diisi.',

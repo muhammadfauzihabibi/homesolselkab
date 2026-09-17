@@ -27,17 +27,21 @@ class SuperAdminSeeder extends Seeder
             $password = '12345678';
 
             $superAdmin = User::create([
-                'name' => 'Super Administrator',
-                'username' => 'superadmin',
-                'password' => Hash::make($password),
+                'name'      => 'Super Administrator',
+                'username'  => 'superadmin',
+                'password'  => Hash::make($password),
                 'is_active' => true,
+                'role_id'   => $role->id,
             ]);
 
             $this->command->info('✅ Akun Super Admin berhasil dibuat!');
             $this->command->warn('Username : superadmin');
             $this->command->warn('Password : ' . $password);
         } else {
-            $superAdmin->update(['password' => Hash::make('12345678')]);
+            $superAdmin->update([
+                'password' => Hash::make('12345678'),
+                'role_id'  => $role->id,
+            ]);
             $this->command->info('⚡ Akun Super Admin sudah ada di database. Password telah di-reset menjadi: 12345678');
         }
 

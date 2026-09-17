@@ -3,210 +3,232 @@
 @section('title', $item->nama . ' - Sarana dan Prasarana Solok Selatan')
 
 @section('content')
-  <!-- 1. HERO BANNER SECTION WITH BACKGROUND SLIDER -->
-  <section class="page-hero-banner position-relative">
-    <div class="hero-bg-backdrop position-absolute top-0 start-0 w-100 h-100">
-      <div class="hero-bg-slider w-100 h-100">
-        <div class="hero-bg-slide active">
-          @if($item->foto_utama)
-            <img src="{{ asset('storage/' . $item->foto_utama) }}" class="w-100 h-100 object-fit-cover" alt="{{ $item->nama }}">
-          @else
-            <img src="{{ asset('images/bg1.jpeg') }}" class="w-100 h-100 object-fit-cover" alt="Header Background">
-          @endif
-        </div>
-      </div>
-      <div class="hero-gradient-overlay position-absolute top-0 start-0 w-100 h-100"></div>
-    </div>
+  <!-- Bento Hero Banner -->
+  <section class="bento-page-banner position-relative text-white overflow-hidden">
+    <x-frontend-hero-background />
+    <div class="hero-bento-overlay"></div>
 
     <div class="container position-relative" style="z-index: 5;">
-      <!-- Breadcrumb Navigation -->
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a href="{{ route('home') }}">Beranda</a>
-          </li>
-          <li class="breadcrumb-item">
-            <a href="{{ route('frontend.sarana_prasarana.index') }}">Sarana & Prasarana</a>
-          </li>
-          <li class="breadcrumb-item active text-white" aria-current="page">{{ Str::limit($item->nama, 30) }}</li>
-        </ol>
-      </nav>
+      <!-- Top Navigation: Breadcrumb + Hero Back Button -->
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('frontend.sarana_prasarana.index') }}">Sarana & Prasarana</a></li>
+            <li class="breadcrumb-item active text-truncate max-w-xs" aria-current="page">{{ Str::limit($item->nama, 35) }}</li>
+          </ol>
+        </nav>
 
-      <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
-        <span class="badge bg-primary rounded-pill px-3 py-1.5 fs-8">
-          {{ $item->kategori }}
+        <a href="{{ route('frontend.sarana_prasarana.index') }}" class="btn-bento-hero-back">
+          <i class="bi bi-arrow-left"></i> <span>Kembali ke Sarana & Prasarana</span>
+        </a>
+      </div>
+
+      <div class="d-flex flex-wrap align-items-center gap-2 mb-2.5">
+        <span class="bento-badge bento-badge-primary">
+          <i class="bi bi-tag-fill me-1"></i> {{ $item->kategori }}
         </span>
         @if($item->sub_kategori)
-          <span class="badge bg-secondary rounded-pill px-3 py-1.5 fs-8">
+          <span class="bento-badge">
             {{ $item->sub_kategori }}
           </span>
         @endif
-        <span class="badge {{ $item->kondisi == 'Baik' ? 'bg-success' : ($item->kondisi == 'Rusak Ringan' ? 'bg-warning text-dark' : 'bg-danger') }} rounded-pill px-3 py-1.5 fs-8">
-          Kondisi: {{ $item->kondisi }}
+        <span class="bento-badge {{ $item->kondisi == 'Baik' ? 'bento-badge-success' : ($item->kondisi == 'Rusak Ringan' ? 'bento-badge-warning' : 'bento-badge-danger') }}">
+          <i class="bi bi-shield-check me-1"></i> Kondisi: {{ $item->kondisi }}
         </span>
-        <span class="badge {{ $item->status_operasional == 'Aktif' ? 'bg-info text-dark' : 'bg-secondary' }} rounded-pill px-3 py-1.5 fs-8">
-          Status: {{ $item->status_operasional }}
+        <span class="bento-badge">
+          <i class="bi bi-activity me-1"></i> Status: {{ $item->status_operasional }}
         </span>
       </div>
 
-      <h1 class="page-title text-white fw-bold mb-2">{{ $item->nama }}</h1>
-      <p class="page-description text-white-50">
+      <h1 class="bento-page-title mb-2">{{ $item->nama }}</h1>
+      <p class="bento-page-subtitle mb-0">
         <i class="bi bi-geo-alt-fill text-danger me-1"></i> {{ $item->kecamatan }}@if($item->nagari), Nagari {{ $item->nagari }}@endif
       </p>
     </div>
   </section>
 
-  <!-- 2. MAIN CONTENT SECTION -->
-  <div class="container pb-5 container-overlap" style="margin-top: -40px;">
-    <div class="row g-4">
-      
-      <!-- Left Column: Image Gallery & Specifications -->
-      <div class="col-lg-8">
-        
-        <!-- Main Image Card -->
-        <div class="card border-0 rounded-4 overflow-hidden shadow-sm mb-4 bg-body">
-          <div class="ratio ratio-16x9">
-            @php
-              $fallbackImgMain = asset('images/bg1.jpeg');
-              $katLowerMain = strtolower($item->kategori);
-              if(str_contains($katLowerMain, 'olahraga')) {
-                  $fallbackImgMain = asset('images/bg2.jpeg');
-              } elseif(str_contains($katLowerMain, 'taman') || str_contains($katLowerMain, 'rth')) {
-                  $fallbackImgMain = asset('images/rth.png');
-              } elseif(str_contains($katLowerMain, 'kendaraan') || str_contains($katLowerMain, 'transportasi')) {
-                  $fallbackImgMain = asset('images/bg3.jpeg');
-              } elseif(str_contains($katLowerMain, 'gedung')) {
-                  $fallbackImgMain = asset('images/menara-songket.png');
-              }
-            @endphp
-            <img src="{{ $item->foto_utama ? asset('storage/' . $item->foto_utama) : $fallbackImgMain }}" alt="{{ $item->nama }}" class="object-fit-cover w-100 h-100">
+  <!-- Main Bento Detail Container -->
+  <div class="container bento-overlap-container pb-5">
+    <div class="bento-grid align-items-start">
+
+      <!-- Left Column (Bento Span 8): Unified Facility Showcase & Specifications -->
+      <div class="bento-col-8">
+        <div class="bento-card p-4 p-md-5 mb-4">
+          @php
+            $fallbackImgMain = asset('images/bg1.jpeg');
+            $katLowerMain = strtolower($item->kategori);
+            if(str_contains($katLowerMain, 'olahraga')) {
+                $fallbackImgMain = asset('images/bg2.jpeg');
+            } elseif(str_contains($katLowerMain, 'taman') || str_contains($katLowerMain, 'rth')) {
+                $fallbackImgMain = asset('images/rth.png');
+            } elseif(str_contains($katLowerMain, 'kendaraan') || str_contains($katLowerMain, 'transportasi')) {
+                $fallbackImgMain = asset('images/bg3.jpeg');
+            } elseif(str_contains($katLowerMain, 'gedung')) {
+                $fallbackImgMain = asset('images/menara-songket.png');
+            }
+          @endphp
+
+          <!-- Main Facility Photo Showcase -->
+          <div class="bento-media mb-4 rounded-4 overflow-hidden position-relative shadow-sm" style="aspect-ratio: 16/9; max-height: 480px;">
+            <img src="{{ $item->foto_utama ? asset('storage/' . $item->foto_utama) : $fallbackImgMain }}" alt="{{ $item->nama }}" class="w-100 h-100 object-fit-cover">
           </div>
-        </div>
 
-        <!-- Galeri Foto Tambahan -->
-        @if(!empty($item->galeri_foto) && is_array($item->galeri_foto) && count($item->galeri_foto) > 0)
-          <div class="card border-0 rounded-4 shadow-sm p-4 mb-4 bg-body">
-            <h5 class="fw-bold text-main mb-3">
-              <i class="bi bi-images text-primary me-2"></i> Galeri Foto
-            </h5>
-            <div class="row g-3">
-              @foreach($item->galeri_foto as $gPath)
-                <div class="col-6 col-md-4">
-                  <a href="{{ asset('storage/' . $gPath) }}" target="_blank" class="d-block ratio ratio-4x3 rounded-3 overflow-hidden shadow-sm border card-jds-hover">
-                    <img src="{{ asset('storage/' . $gPath) }}" alt="Galeri {{ $item->nama }}" class="object-fit-cover w-100 h-100">
-                  </a>
-                </div>
-              @endforeach
-            </div>
-          </div>
-        @endif
-
-        <!-- Specifications & Details -->
-        <div class="card border-0 rounded-4 shadow-sm p-4 mb-4 bg-body">
-          <h5 class="fw-bold text-main mb-3 border-bottom pb-2">
-            <i class="bi bi-info-circle text-primary me-2"></i> Detail & Spesifikasi Fasilitas
-          </h5>
-
-          @if($item->jenis_kendaraan)
-            <div class="mb-4">
-              <h6 class="fw-bold text-secondary fs-7 mb-1">Jenis / Merk Kendaraan:</h6>
-              <p class="fs-7 text-main fw-semibold mb-0">{{ $item->jenis_kendaraan }}</p>
-            </div>
-          @endif
-
-          @if($item->spesifikasi)
-            <div class="mb-4">
-              <h6 class="fw-bold text-secondary fs-7 mb-1">Spesifikasi Teknis:</h6>
-              <p class="fs-7 text-main leading-relaxed mb-0" style="white-space: pre-line;">{{ $item->spesifikasi }}</p>
-            </div>
-          @endif
-
-          @if($item->tarif_retribusi)
-            <div class="mb-4">
-              <h6 class="fw-bold text-secondary fs-7 mb-1">Tarif & Retribusi:</h6>
-              <div class="p-3 bg-body-tertiary rounded-3 border-start border-primary border-4">
-                <p class="fs-7 text-main leading-relaxed mb-0" style="white-space: pre-line;">{{ $item->tarif_retribusi }}</p>
+          <!-- Additional Photo Gallery (if available) -->
+          @if(!empty($item->galeri_foto) && is_array($item->galeri_foto) && count($item->galeri_foto) > 0)
+            <div class="mb-4 pb-4 border-bottom border-subtle">
+              <h6 class="fw-bold mb-3 fs-7 text-uppercase text-muted-custom d-flex align-items-center gap-2" style="letter-spacing: 0.05em;">
+                <i class="bi bi-images text-primary"></i> Galeri Dokumentasi Foto ({{ count($item->galeri_foto) }})
+              </h6>
+              <div class="row g-2.5">
+                @foreach($item->galeri_foto as $gPath)
+                  <div class="col-4 col-sm-3">
+                    <a href="{{ asset('storage/' . $gPath) }}" target="_blank" class="bento-card p-0 overflow-hidden bento-card-interactive d-block rounded-3 border border-subtle shadow-xs" style="aspect-ratio: 4/3;">
+                      <img src="{{ asset('storage/' . $gPath) }}" alt="Galeri {{ $item->nama }}" class="w-100 h-100 object-fit-cover">
+                    </a>
+                  </div>
+                @endforeach
               </div>
             </div>
           @endif
 
-          @if($item->rute_layanan)
-            <div class="mb-4">
-              <h6 class="fw-bold text-secondary fs-7 mb-1">Rute Layanan & Operasional:</h6>
-              <p class="fs-7 text-main leading-relaxed mb-0" style="white-space: pre-line;">{{ $item->rute_layanan }}</p>
+          <!-- Specifications Header -->
+          <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-subtle">
+            <div class="d-flex align-items-center justify-content-center rounded-3 bg-primary-subtle text-primary" style="width: 44px; height: 44px; flex-shrink: 0;">
+              <i class="bi bi-info-circle-fill fs-4"></i>
             </div>
-          @endif
+            <div>
+              <h5 class="fw-bold mb-0.5 fs-5 text-body-emphasis">Spesifikasi & Informasi Fasilitas</h5>
+              <small class="text-muted-custom fs-7">Rincian data teknis, tarif layanan, rute, dan alamat sarana</small>
+            </div>
+          </div>
 
-          <div class="mb-0">
-            <h6 class="fw-bold text-secondary fs-7 mb-1">Alamat Lengkap:</h6>
-            <p class="fs-7 text-main leading-relaxed mb-0">{{ $item->alamat_lengkap }}</p>
+          <div class="d-flex flex-column gap-4">
+            @if($item->jenis_kendaraan)
+              <div class="pb-3 border-bottom border-subtle">
+                <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-1.5" style="letter-spacing: 0.05em;">Jenis / Tipe Unit:</span>
+                <p class="fs-6 fw-bold text-body-emphasis mb-0">{{ $item->jenis_kendaraan }}</p>
+              </div>
+            @endif
+
+            @if($item->spesifikasi)
+              <div class="pb-3 border-bottom border-subtle">
+                <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-2" style="letter-spacing: 0.05em;">Spesifikasi Teknis:</span>
+                <p class="fs-6 text-body-emphasis mb-0 leading-relaxed" style="white-space: pre-line;">{{ $item->spesifikasi }}</p>
+              </div>
+            @endif
+
+            @if($item->tarif_retribusi)
+              <div class="pb-3 border-bottom border-subtle">
+                <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-2" style="letter-spacing: 0.05em;">Tarif & Retribusi:</span>
+                <div class="p-3.5 rounded-3 bg-body-tertiary border border-subtle border-start border-4 border-primary" style="padding: 1rem 1.25rem;">
+                  <p class="fs-6 fw-semibold text-body-emphasis mb-0 leading-relaxed" style="white-space: pre-line;">{{ $item->tarif_retribusi }}</p>
+                </div>
+              </div>
+            @endif
+
+            @if($item->rute_layanan)
+              <div class="pb-3 border-bottom border-subtle">
+                <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-2" style="letter-spacing: 0.05em;">Rute Layanan:</span>
+                <div class="p-3.5 rounded-3 bg-body-tertiary border border-subtle" style="padding: 1rem 1.25rem;">
+                  <p class="fs-6 text-body-emphasis mb-0 leading-relaxed" style="white-space: pre-line;">{{ $item->rute_layanan }}</p>
+                </div>
+              </div>
+            @endif
+
+            <div class="pt-1">
+              <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-2" style="letter-spacing: 0.05em;">Alamat Lengkap:</span>
+              <div class="d-flex align-items-start gap-3 p-3.5 rounded-3 bg-body-tertiary border border-subtle" style="padding: 1rem 1.25rem;">
+                <div class="rounded-circle bg-danger-subtle text-danger d-flex align-items-center justify-content-center mt-0.5" style="width: 32px; height: 32px; flex-shrink: 0;">
+                  <i class="bi bi-geo-alt-fill fs-6"></i>
+                </div>
+                <p class="fs-6 text-body-emphasis mb-0 leading-relaxed">{{ $item->alamat_lengkap }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Navigation inside the Main Card -->
+          <div class="pt-4 mt-4 border-top border-subtle d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <a href="{{ route('frontend.sarana_prasarana.index') }}" class="btn-bento btn-bento-outline">
+              <i class="bi bi-arrow-left"></i> Kembali ke Sarana & Prasarana
+            </a>
+            <a href="{{ route('home') }}" class="btn-bento btn-bento-ghost">
+              <i class="bi bi-house-door"></i> Ke Beranda
+            </a>
           </div>
         </div>
-
       </div>
 
-      <!-- Right Column: Location & Management Info Card -->
-      <div class="col-lg-4">
-        
-        <!-- Info Card Pengelola -->
-        <div class="card border-0 rounded-4 shadow-sm p-4 mb-4 bg-body">
-          <h5 class="fw-bold text-main mb-3 border-bottom pb-2">
-            <i class="bi bi-person-badge text-primary me-2"></i> Pengelola & Kontak
-          </h5>
-
-          <div class="mb-3">
-            <small class="text-secondary d-block fs-8">Instansi Pengelola</small>
-            <span class="fw-bold fs-7 text-main d-block">{{ $item->pengelola }}</span>
+      <!-- Right Column: Location & Contact Bento (Bento Span 4) -->
+      <div class="bento-col-4">
+        <div class="bento-card p-4 p-md-4.5 sticky-top mb-4" style="top: 100px;">
+          <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom border-subtle">
+            <div class="d-flex align-items-center justify-content-center rounded-3 bg-primary-subtle text-primary" style="width: 40px; height: 40px; flex-shrink: 0;">
+              <i class="bi bi-person-badge-fill fs-5"></i>
+            </div>
+            <div>
+              <h5 class="fw-bold mb-0.5 fs-6 text-body-emphasis">Pengelola & Lokasi</h5>
+              <small class="text-muted-custom fs-8">Informasi penanggung jawab</small>
+            </div>
           </div>
 
-          @if($item->kontak_pengelola)
-            <div class="mb-3">
-              <small class="text-secondary d-block fs-8">Kontak Layanan / Pengelola</small>
-              <a href="tel:{{ $item->kontak_pengelola }}" class="btn btn-outline-success rounded-pill px-3 py-1.5 fs-7 fw-semibold mt-1 d-inline-flex align-items-center gap-2">
-                <i class="bi bi-telephone-fill"></i> {{ $item->kontak_pengelola }}
-              </a>
+          <div class="d-flex flex-column gap-3.5 mb-4">
+            <div class="pb-3 border-bottom border-subtle">
+              <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-1.5" style="letter-spacing: 0.05em;">Instansi Pengelola</span>
+              <strong class="fs-6 d-block text-primary fw-bold">{{ $item->pengelola }}</strong>
             </div>
-          @endif
 
-          <hr class="my-3">
+            @if($item->kontak_pengelola)
+              <div class="pb-3 border-bottom border-subtle">
+                <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-2" style="letter-spacing: 0.05em;">Kontak Layanan</span>
+                <a href="tel:{{ $item->kontak_pengelola }}" class="btn-bento btn-bento-outline w-100 justify-content-center py-2.5">
+                  <i class="bi bi-telephone-fill text-success me-2"></i> {{ $item->kontak_pengelola }}
+                </a>
+              </div>
+            @endif
 
-          <div class="mb-3">
-            <small class="text-secondary d-block fs-8">Lokasi Kecamatan</small>
-            <span class="fw-semibold fs-7 text-main"><i class="bi bi-geo-alt me-1 text-danger"></i> {{ $item->kecamatan }}</span>
+            <div class="pb-3 border-bottom border-subtle">
+              <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-1.5" style="letter-spacing: 0.05em;">Wilayah Kecamatan</span>
+              <div class="fs-6 fw-semibold text-body-emphasis d-flex align-items-center gap-2">
+                <i class="bi bi-geo-alt-fill text-danger fs-6"></i>
+                <span>{{ $item->kecamatan }}</span>
+              </div>
+            </div>
+
+            @if($item->nagari)
+              <div class="pb-3 border-bottom border-subtle">
+                <span class="text-muted-custom fs-8 fw-semibold text-uppercase d-block mb-1.5" style="letter-spacing: 0.05em;">Nagari</span>
+                <span class="fs-6 fw-semibold text-body-emphasis d-block">{{ $item->nagari }}</span>
+              </div>
+            @endif
           </div>
-
-          @if($item->nagari)
-            <div class="mb-3">
-              <small class="text-secondary d-block fs-8">Nagari</small>
-              <span class="fw-semibold fs-7 text-main">{{ $item->nagari }}</span>
-            </div>
-          @endif
 
           @if($item->google_maps_url)
-            <div class="mt-4">
-              <a href="{{ $item->google_maps_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary rounded-pill w-100 py-2.5 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm">
-                <i class="bi bi-map-fill"></i> Buka Peta Google Maps
+            <div class="mb-4">
+              <a href="{{ $item->google_maps_url }}" target="_blank" rel="noopener noreferrer" class="btn-bento btn-bento-primary w-100 justify-content-center py-2.5 shadow-sm">
+                <i class="bi bi-map-fill me-2"></i> Buka Google Maps
               </a>
             </div>
           @endif
-        </div>
 
-        <!-- Back Button Card -->
-        <div class="card border-0 rounded-4 shadow-sm p-3 bg-body">
-          <a href="{{ route('frontend.sarana_prasarana.index') }}" class="btn btn-outline-secondary rounded-pill py-2 w-100 fw-semibold fs-7 d-flex align-items-center justify-content-center gap-2">
-            <i class="bi bi-arrow-left"></i> Kembali ke Daftar Prasarana
-          </a>
+          <div class="pt-3 border-top border-subtle d-flex flex-column gap-2.5">
+            <a href="{{ route('frontend.sarana_prasarana.index') }}" class="btn-bento btn-bento-outline w-100 justify-content-center py-2.5 fs-7">
+              <i class="bi bi-arrow-left me-1.5"></i> Kembali ke Sarana & Prasarana
+            </a>
+            <a href="{{ route('home') }}" class="btn-bento btn-bento-ghost w-100 justify-content-center py-2 fs-7">
+              <i class="bi bi-house-door me-1.5"></i> Ke Beranda
+            </a>
+          </div>
         </div>
-
       </div>
 
     </div>
 
-    <!-- Related Sarana & Prasarana -->
+    <!-- Related Facilities Bento Grid -->
     @if(isset($relatedItems) && count($relatedItems) > 0)
-      <div class="mt-5 pt-4 border-top">
-        <h4 class="fw-bold text-main mb-4">Sarana & Prasarana Terkait</h4>
-        <div class="row g-4">
+      <div class="mt-5 pt-4 border-top border-subtle">
+        <h4 class="fw-bold mb-4">Sarana & Prasarana Terkait</h4>
+        <div class="bento-grid">
           @foreach($relatedItems as $rel)
             @php
               $fallbackImgRel = asset('images/bg1.jpeg');
@@ -221,17 +243,17 @@
                   $fallbackImgRel = asset('images/menara-songket.png');
               }
             @endphp
-            <div class="col-md-6 col-lg-3">
-              <a href="{{ route('frontend.sarana_prasarana.detail', $rel->slug) }}" class="text-decoration-none h-100 d-block">
-                <div class="card border-0 rounded-4 overflow-hidden shadow-sm h-100 card-jds-hover bg-body">
-                  <div class="ratio ratio-16x9">
-                    <img src="{{ $rel->foto_utama ? asset('storage/' . $rel->foto_utama) : $fallbackImgRel }}" class="object-fit-cover w-100 h-100" alt="{{ $rel->nama }}">
-                  </div>
-                  <div class="card-body p-3">
-                    <span class="badge bg-primary-subtle text-primary fs-8 rounded-pill mb-1">{{ $rel->kategori }}</span>
-                    <h6 class="fw-bold text-main line-clamp-2 fs-7 mb-1">{{ $rel->nama }}</h6>
-                    <small class="text-muted-custom fs-8"><i class="bi bi-geo-alt text-danger me-1"></i> {{ $rel->kecamatan }}</small>
-                  </div>
+            <div class="bento-col-3">
+              <a href="{{ route('frontend.sarana_prasarana.detail', $rel->slug) }}" class="bento-card bento-card-interactive p-0 h-100 text-decoration-none">
+                <div class="bento-media" style="aspect-ratio: 16/10;">
+                  <img src="{{ $rel->foto_utama ? asset('storage/' . $rel->foto_utama) : $fallbackImgRel }}" alt="{{ $rel->nama }}">
+                  <span class="position-absolute top-0 start-0 m-2 bento-badge bento-badge-primary">
+                    {{ $rel->kategori }}
+                  </span>
+                </div>
+                <div class="p-3">
+                  <h6 class="fw-bold line-clamp-2 fs-8 mb-1">{{ $rel->nama }}</h6>
+                  <small class="text-muted-custom fs-9"><i class="bi bi-geo-alt text-danger me-1"></i> {{ $rel->kecamatan }}</small>
                 </div>
               </a>
             </div>

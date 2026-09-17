@@ -13,113 +13,139 @@
           $visitorStats = ['online' => 1, 'today' => 1, 'total' => 1];
       }
   }
+
+  if (!isset($settings)) {
+      try {
+          $settings = \App\Models\Setting::pluck('value', 'key')->all();
+      } catch (\Throwable $e) {
+          $settings = [];
+      }
+  }
+
+  $sosmeds = !empty($settings['sosmed_links']) ? json_decode($settings['sosmed_links'], true) : [];
+  $hasAddress = !empty($settings['footer_address']);
+  $hasEmail = !empty($settings['footer_email']);
+  $hasPhone = !empty($settings['footer_phone']);
+  $hasMaps = !empty($settings['footer_google_maps']);
 @endphp
 
-<!-- Footer Utama Portal JDS Style -->
-<footer class="footer-jds text-white pt-5 pb-4 mt-auto">
-  <div class="container">
-    
-    <!-- Informasi Kontak & Alamat Grid -->
-    <div class="row g-4 pb-4 border-bottom border-secondary border-opacity-25">
-      
-      <!-- Logo & Brand -->
-      <div class="col-lg-3 col-md-6">
+<!-- Direct Background Footer Component (Full-width Section, Nav Navigation Removed) -->
+<footer class="footer-custom-wrapper mt-auto py-5 border-top">
+  <div class="container py-2">
+
+    <!-- Upper Row Grid (3 Columns: Brand & Sosmed | Kontak & Alamat | Peta Lokasi) -->
+    <div class="row g-4 justify-content-between align-items-start">
+
+      <!-- Column 1: Brand Logo, Deskripsi & Sosial Media -->
+      <div class="col-lg-5 col-md-6">
         <div class="d-flex align-items-center gap-2 mb-3">
-          <img src="{{ asset('images/lambangsolsel.png') }}" alt="Logo Pemda" height="38">
-          <img src="{{ asset('images/solok-selatan.png') }}" alt="Logo Solsel" height="32" class="img-white-logo">
+          <img src="{{ asset('images/lambangsolsel.png') }}" alt="Logo Pemda" height="44" class="flex-shrink-0">
+          <img src="{{ asset('images/solok-selatan-dark.png') }}" alt="Logo Solsel" height="30" class="brand-logo-light">
+          <img src="{{ asset('images/solok-selatan.png') }}" alt="Logo Solsel" height="30" class="brand-logo-dark">
         </div>
-        <p class="text-white-50 fs-8 leading-relaxed mb-0">
-          Unit Pengelola Portal Informasi & Layanan Publik Terpadu Pemerintah Kabupaten Solok Selatan.
+
+        <p class="footer-desc mb-4 fs-7">
+          {{ $settings['site_description'] ?? 'Portal Resmi Pemerintah Kabupaten Solok Selatan. Pusat informasi publik, layanan perizinan digital, dan kanal pengaduan masyarakat.' }}
         </p>
-      </div>
 
-      <!-- Alamat -->
-      <div class="col-lg-3 col-md-6">
-        <div class="d-flex gap-2">
-          <i class="bi bi-geo-alt text-warning fs-5 flex-shrink-0"></i>
-          <div>
-            <h6 class="fw-bold mb-1 fs-7 text-white">Alamat</h6>
-            <p class="text-white-50 fs-8 mb-0 leading-relaxed">
-              Jalan Raya Padang Aro Kode Pos 27778, Kabupaten Solok Selatan, Sumatera Barat.
-            </p>
-          </div>
+        <!-- Social Media Links Row -->
+        <div class="d-flex align-items-center gap-3 footer-social-row">
+          @if(is_array($sosmeds) && count($sosmeds) > 0)
+            @foreach($sosmeds as $sm)
+              <a href="{{ $sm['url'] ?? '#' }}" target="_blank" rel="noopener noreferrer" class="footer-icon-link" title="{{ $sm['label'] ?? '' }}">
+                <i class="bi {{ $sm['icon'] ?? 'bi-globe' }}"></i>
+              </a>
+            @endforeach
+          @else
+            <small class="text-muted-custom fs-8 d-inline-flex align-items-center gap-1">
+              <i class="bi bi-info-circle opacity-75"></i> Media sosial belum diisi di Pengaturan
+            </small>
+          @endif
         </div>
       </div>
 
-      <!-- Kontak & Email -->
+      <!-- Column 2: Kontak & Alamat -->
       <div class="col-lg-3 col-md-6">
-        <div class="d-flex gap-2 mb-3">
-          <i class="bi bi-envelope text-warning fs-5 flex-shrink-0"></i>
-          <div>
-            <h6 class="fw-bold mb-1 fs-7 text-white">Email</h6>
-            <p class="text-white-50 fs-8 mb-0">diskominfo@solselkab.go.id</p>
-          </div>
-        </div>
-        <div class="d-flex gap-2">
-          <i class="bi bi-telephone text-warning fs-5 flex-shrink-0"></i>
-          <div>
-            <h6 class="fw-bold mb-1 fs-7 text-white">Nomor Telepon</h6>
-            <p class="text-white-50 fs-8 mb-0">(0755) 7000123</p>
-          </div>
-        </div>
+        <h6 class="footer-column-title mb-3 fs-6 fw-bold">Kontak & Alamat</h6>
+        <ul class="list-unstyled footer-contact-list d-flex flex-column gap-3 mb-0 fs-7">
+          <li class="d-flex gap-2">
+            <i class="bi bi-geo-alt-fill text-primary flex-shrink-0 mt-1 fs-6"></i>
+            <div>
+              @if($hasAddress)
+                <span>{{ $settings['footer_address'] }}</span>
+              @else
+                <span class="text-muted-custom fs-8 fst-italic">[Alamat kantor belum diisi]</span>
+              @endif
+            </div>
+          </li>
+          <li class="d-flex gap-2 align-items-center">
+            <i class="bi bi-envelope-at-fill text-primary flex-shrink-0 fs-6"></i>
+            <div>
+              @if($hasEmail)
+                <span>{{ $settings['footer_email'] }}</span>
+              @else
+                <span class="text-muted-custom fs-8 fst-italic">[Email belum diisi]</span>
+              @endif
+            </div>
+          </li>
+          <li class="d-flex gap-2 align-items-center">
+            <i class="bi bi-telephone-fill text-primary flex-shrink-0 fs-6"></i>
+            <div>
+              @if($hasPhone)
+                <span>{{ $settings['footer_phone'] }}</span>
+              @else
+                <span class="text-muted-custom fs-8 fst-italic">[No. Telepon belum diisi]</span>
+              @endif
+            </div>
+          </li>
+        </ul>
       </div>
 
-      <!-- Sosial Media -->
-      <div class="col-lg-3 col-md-6">
-        <h6 class="fw-bold mb-3 fs-7 text-white">Sosial Media</h6>
-        <div class="d-flex gap-2">
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle social-icon-btn"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle social-icon-btn"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle social-icon-btn"><i class="bi bi-twitter-x"></i></a>
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle social-icon-btn"><i class="bi bi-youtube"></i></a>
-          <a href="#" class="btn btn-sm btn-outline-light rounded-circle social-icon-btn"><i class="bi bi-tiktok"></i></a>
+      <!-- Column 3: Peta Lokasi Google Maps -->
+      <div class="col-lg-4 col-md-12">
+        <h6 class="footer-column-title mb-3 fs-6 fw-bold">Lokasi Kantor</h6>
+        <div class="footer-map-container rounded-4 overflow-hidden border">
+          @if($hasMaps)
+            {!! $settings['footer_google_maps'] !!}
+          @else
+            <div class="footer-map-empty rounded-4 p-4 text-center d-flex flex-column align-items-center justify-content-center h-100 bg-body-tertiary">
+              <i class="bi bi-geo-alt fs-2 text-muted opacity-50 mb-1"></i>
+              <span class="text-muted-custom fs-8 fw-semibold">Peta Google Maps belum diisi</span>
+              <small class="text-muted-custom fs-9 mt-0.5">Silakan isi kode iframe di menu Pengaturan Admin</small>
+            </div>
+          @endif
         </div>
       </div>
 
     </div>
 
-    <!-- Section Statistik Pengunjung -->
-    <div class="py-3 border-bottom border-secondary border-opacity-25">
-      <div class="row align-items-center g-3">
-        <div class="col-md-4 text-center text-md-start">
-          <span class="fw-bold fs-7 text-white text-uppercase tracking-wide">
-            <i class="bi bi-bar-chart-fill text-warning me-2"></i>Statistik Pengunjung
-          </span>
-        </div>
-        <div class="col-md-8">
-          <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-end gap-3">
-            
-            {{-- Pengunjung Online --}}
-            <div class="d-inline-flex align-items-center bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-pill px-3 py-1.5 shadow-sm">
-              <span class="spinner-grow spinner-grow-sm text-success me-2" style="width: 8px; height: 8px;" role="status"></span>
-              <span class="text-white-50 fs-8 me-2">Online:</span>
-              <span class="fw-bold text-white fs-7">{{ number_format($visitorStats['online']) }}</span>
-            </div>
+    <!-- Divider -->
+    <hr class="footer-divider my-4 opacity-25">
 
-            {{-- Pengunjung Hari Ini --}}
-            <div class="d-inline-flex align-items-center bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-pill px-3 py-1.5 shadow-sm">
-              <i class="bi bi-calendar2-check text-warning me-2 fs-8"></i>
-              <span class="text-white-50 fs-8 me-2">Hari Ini:</span>
-              <span class="fw-bold text-white fs-7">{{ number_format($visitorStats['today']) }}</span>
-            </div>
-
-            {{-- Total Pengunjung --}}
-            <div class="d-inline-flex align-items-center bg-dark bg-opacity-50 border border-secondary border-opacity-25 rounded-pill px-3 py-1.5 shadow-sm">
-              <i class="bi bi-people-fill text-info me-2 fs-8"></i>
-              <span class="text-white-50 fs-8 me-2">Total Pengunjung:</span>
-              <span class="fw-bold text-white fs-7">{{ number_format($visitorStats['total']) }}</span>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Copyright Bar -->
-    <div class="pt-4 text-center">
-      <p class="mb-0 fs-8 text-white-50">
-        Copyright &copy; {{ date('Y') }} UPTD Kominfo Diskominfo Kabupaten Solok Selatan. Hak Cipta Dilindungi.
+    <!-- Lower Row: Copyright & Visitor Stats Only (No Navigation Links) -->
+    <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 fs-8 footer-bottom-row">
+      <p class="mb-0 copyright-text">
+        &copy; {{ date('Y') }} Pemerintah Kabupaten Solok Selatan. Hak Cipta Dilindungi.
       </p>
+
+      <!-- Visitor Stats Pills -->
+      <div class="d-flex flex-wrap align-items-center gap-2 footer-stats-wrapper">
+        <div class="footer-stat-badge">
+          <span class="pulse-dot bg-success"></span>
+          <span class="opacity-75">Online:</span>
+          <strong>{{ number_format($visitorStats['online']) }}</strong>
+        </div>
+        <div class="footer-stat-badge">
+          <i class="bi bi-calendar-check text-warning"></i>
+          <span class="opacity-75">Hari ini:</span>
+          <strong>{{ number_format($visitorStats['today']) }}</strong>
+        </div>
+        <div class="footer-stat-badge">
+          <i class="bi bi-bar-chart-line text-info"></i>
+          <span class="opacity-75">Total:</span>
+          <strong>{{ number_format($visitorStats['total']) }}</strong>
+        </div>
+      </div>
     </div>
 
   </div>
